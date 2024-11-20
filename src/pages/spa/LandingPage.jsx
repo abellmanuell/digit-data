@@ -1,11 +1,11 @@
 import HeaderLandingPage from "./HeaderLandingPage";
+import HeroSection from "./HeroSection";
 
 export default function LandingPage() {
   return (
-    <div className="bg-tw-blue-700 h-dvh">
+    <div>
       <HeaderLandingPage />
-
-      <main className="pt-20"></main>
+      <HeroSection />
     </div>
   );
 }

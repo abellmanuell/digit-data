@@ -3,10 +3,7 @@ import { cn } from "../utils/cn";
 /* eslint-disable react/prop-types */
 function IconButton({ Icon, onClick, ...props }) {
   return (
-    <button
-      onClick={onClick}
-      className={cn(props.className, "hover:text-tw-blue-100")}
-    >
+    <button onClick={onClick} className={cn(props.className)}>
       <Icon className="w-6" />
     </button>
   );

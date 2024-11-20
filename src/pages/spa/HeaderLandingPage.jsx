@@ -38,7 +38,7 @@ function LandingPageHeader() {
   return (
     <header
       ref={navRef}
-      className="px-4 py-2 fixed w-full top-0 bg-tw-blue-700"
+      className="px-4 py-2 md:px-20 fixed w-full top-0 bg-tw-blue-700 z-20 "
     >
       <nav className={cn("flex", "overflow-hidden")}>
         <div className="grow md:grow-0">
@@ -47,9 +47,9 @@ function LandingPageHeader() {
           </Link>
         </div>
 
-        {/* 
-              For mobile responsiveness
-        */}
+        {/**********************************
+         *    MENU MOBILE RESPONSIVENESS
+         *********************************/}
         <div
           className={cn(
             "absolute top-0 md:-right-72",
@@ -89,7 +89,9 @@ function LandingPageHeader() {
           </div>
         </div>
 
-        {/* Desktop Mode */}
+        {/**********************************
+         *    DESKTOP RESPONSIVENESS
+         *********************************/}
         <div className="hidden md:block w-full">
           <ul className="flex justify-end">
             {navigationLinks.map(({ to, name }) => {
