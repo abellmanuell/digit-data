@@ -15,7 +15,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{matrix.node}}
-          cache: "pnpm"
 
       - name: Install PNPM
         uses: pnpm/action-setup@v2
