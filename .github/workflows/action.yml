@@ -14,13 +14,16 @@ jobs:
       - name: Install PNPM
         uses: pnpm/action-setup@v2
         with:
-          vision: latest
+          vision: 9
 
       - name: Checkout Node.js ${{matrix.node}}
         uses: actions/setup-node@v4
         with:
           node-version: ${{matrix.node}}
           cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install
 
       - name: Build
         run: pnpm run build
