@@ -14,7 +14,7 @@ jobs:
       - name: Install PNPM
         uses: pnpm/action-setup@v2
         with:
-          vision: latest
+          vision: 8
 
       - name: Checkout Node.js ${{matrix.node}}
         uses: actions/setup-node@v4
