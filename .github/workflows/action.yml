@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [lts/*]
+        node: [23]
     steps:
       - name: Check Out Repository code
         uses: actions/checkout@v4
