@@ -2,7 +2,6 @@ import { cn } from "../../utils/cn";
 import smilingLady from "../../assets/happy-model-blowing-kiss.png";
 import Paragraphing from "@/components/Paragraphing";
 import ListItem from "@/components/ListItem";
-import { Link } from "react-router-dom";
 import LinkTo from "@/components/LinkTo";
 import {
   CursorArrowRippleIcon,
@@ -16,7 +15,6 @@ import "slick-carousel/slick/slick-theme.css";
 
 const HeroSection = () => {
   let sliderSetting = {
-    // dots: true,
     arrows: false,
     autoplay: true,
   };
@@ -24,9 +22,9 @@ const HeroSection = () => {
   return (
     <main
       className={cn(
-        "pt-10 px-4 md:px-32",
-        "flex items-end",
-        "bg-tw-blue-700 overflow-hidden h-dvh"
+        "pt-20 px-4 md:px-32",
+        "md:flex items-end",
+        "bg-tw-blue-700 "
       )}
     >
       <div className="lg:grid grid-cols-2">
@@ -81,7 +79,7 @@ const HeroSection = () => {
                 alt="Smiling Lady"
                 className="relative top-10"
               />
-            </div>{" "}
+            </div>
           </Slider>
         </div>
       </div>
