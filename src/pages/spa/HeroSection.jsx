@@ -1,5 +1,6 @@
 import { cn } from "../../utils/cn";
 import smilingLady from "../../assets/happy-model-blowing-kiss.png";
+// import africanAmerican from "../../assets/african-american.png";
 import Paragraphing from "@/components/Paragraphing";
 import ListItem from "@/components/ListItem";
 import LinkTo from "@/components/LinkTo";
@@ -52,25 +53,31 @@ const HeroSection = () => {
               " my-4 space-y-2  justify-center"
             )}
           >
-            <ListItem
-              className={cn(
-                "bg-black text-white ",
-                "font-bold py-4 px-10 text-sm rounded-full space-x-2 ",
-                "flex items-center justify-center"
-              )}
-            >
-              <LinkTo to="/login" name="Get Started" />
-              <IconButton Icon={CursorArrowRippleIcon} />
+            <ListItem>
+              <LinkTo
+                className={cn(
+                  "bg-black text-white ",
+                  "font-bold py-4 px-10 text-sm rounded-full space-x-2 ",
+                  "flex items-center justify-center"
+                )}
+                to="/login"
+                name="Get Started"
+              >
+                <IconButton Icon={CursorArrowRippleIcon} />
+              </LinkTo>
             </ListItem>
-            <ListItem
-              className={cn(
-                "bg-white ",
-                "font-bold py-4 px-10 text-sm rounded-full space-x-2 ",
-                "flex items-center justify-center"
-              )}
-            >
-              <LinkTo to="/" name="Discover" />
-              <IconButton Icon={MagnifyingGlassIcon} />
+            <ListItem>
+              <LinkTo
+                className={cn(
+                  "bg-white ",
+                  "font-bold py-4 px-10 text-sm rounded-full ",
+                  "flex items-center justify-center space-x-2"
+                )}
+                to="/"
+                name="Discover"
+              >
+                <IconButton Icon={MagnifyingGlassIcon} />
+              </LinkTo>
             </ListItem>
           </ul>
         </div>

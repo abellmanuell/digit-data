@@ -11,6 +11,11 @@ import {
 import IconButton from "../../components/IconButton";
 import Paragraphing from "../../components//Paragraphing";
 import Heading from "@/components/Heading";
+import About from "./About";
+import WhyIs from "./WhyIs";
+import Features from "./Features";
+import Plans from "./Plans";
+import Services from "./Services";
 
 export default function LandingPage() {
   return (
@@ -18,8 +23,8 @@ export default function LandingPage() {
       <HeaderLandingPage />
       <HeroSection />
 
-      <section className="px-4 md:px-32 py-10 md:h-dvh md:flex flex-col items-center justify-center">
-        <Heading>Overview</Heading>
+      <section className="px-4 md:px-32 py-10  md:flex flex-col items-center justify-center lg:h-svh">
+        <Heading className="text-center text-xl">Overview</Heading>
         <Paragraphing className="text-center text-gray-400">
           Our mission and vision of digit data
         </Paragraphing>
@@ -70,6 +75,12 @@ export default function LandingPage() {
           </StatementCard>
         </Statement>
       </section>
+
+      <About />
+      <WhyIs />
+      <Features />
+      <Plans />
+      <Services />
     </div>
   );
 }

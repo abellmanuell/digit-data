@@ -1,5 +1,7 @@
-const Heading = ({ children }) => {
-  return <h1 className="font-bold text-center">{children}</h1>;
+import { cn } from "../utils/cn";
+
+const Heading = ({ children, ...props }) => {
+  return <h1 className={cn("font-bold", props.className)}>{children}</h1>;
 };
 
 export default Heading;
