@@ -25,12 +25,12 @@ function LandingPageHeader() {
       const navHeader = navRef.current;
 
       if (scrollY > 0) {
-        navHeader.classList.add("text-black");
         navHeader.classList.add("bg-white");
+        navHeader.classList.add("text-black");
       } else {
+        navHeader.classList.remove("text-tw-blue-200");
         navHeader.classList.remove("text-black");
         navHeader.classList.remove("bg-white");
-        navHeader.classList.add("text-tw-blue-200");
       }
     });
   }, []);
@@ -104,7 +104,7 @@ function LandingPageHeader() {
 
             <ListItem>
               <Link
-                className="bg-yellow-400 text-black py-2 px-6 font-medium rounded-full"
+                className="bg-black text-white py-2 px-6 font-medium rounded-full"
                 to="/login"
               >
                 Log In
@@ -113,7 +113,7 @@ function LandingPageHeader() {
 
             <ListItem>
               <Link
-                className="py-2 px-6 font-medium text-white rounded-full border hover:bg-tw-blue-100 hover:text-tw-blue-700"
+                className="py-2 px-6 font-medium rounded-full bg-tw-blue-100 hover:bg-tw-blue-200"
                 to="/login"
               >
                 Sign Up

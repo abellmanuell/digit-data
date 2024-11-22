@@ -23,22 +23,22 @@ const HeroSection = () => {
     <main
       className={cn(
         "pt-20 px-4 md:px-32",
-        "md:flex items-end",
-        "bg-tw-blue-700 "
+        "lg:flex items-end",
+        "bg-tw-blue-700"
       )}
     >
       <div className="lg:grid grid-cols-2">
         <div className="self-center">
           <section className="">
             <h1 className="text-white font-bold text-4xl mb-2">
-              <span className="text-yellow-400">Buy affordable Airtime</span>{" "}
+              <span className="text-amber-400">Buy affordable Airtime</span>{" "}
               <br />
               Mobile Data, Utility bills, Cable subscription and
               <br />
               others.
             </h1>
 
-            <Paragraphing className="text-white">
+            <Paragraphing className="text-tw-blue-200 py-2">
               We offer you the most affordable and most cheapest data, airtime,
               Dstv, Gotv and Startimes subscription. Here is the right place for
               your Electricity Bill payment, subscriptions and also Convert your
@@ -46,18 +46,29 @@ const HeroSection = () => {
             </Paragraphing>
           </section>
 
-          <ul className="flex my-4 space-x-4 justify-center lg:justify-start">
+          <ul
+            className={cn(
+              "md:flex md:space-y-0 md:space-x-4 md:justify-start",
+              " my-4 space-y-2  justify-center"
+            )}
+          >
             <ListItem
               className={cn(
                 "bg-black text-white ",
-                "font-bold py-4 px-10 rounded-full space-x-2 ",
-                "flex items-center"
+                "font-bold py-4 px-10 text-sm rounded-full space-x-2 ",
+                "flex items-center justify-center"
               )}
             >
               <LinkTo to="/login" name="Get Started" />
               <IconButton Icon={CursorArrowRippleIcon} />
             </ListItem>
-            <ListItem className="bg-white font-bold py-4 px-6 rounded-full space-x-2 flex items-center">
+            <ListItem
+              className={cn(
+                "bg-white ",
+                "font-bold py-4 px-10 text-sm rounded-full space-x-2 ",
+                "flex items-center justify-center"
+              )}
+            >
               <LinkTo to="/" name="Discover" />
               <IconButton Icon={MagnifyingGlassIcon} />
             </ListItem>
