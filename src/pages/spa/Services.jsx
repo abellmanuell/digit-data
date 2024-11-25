@@ -4,6 +4,8 @@ import {
   ArrowPathRoundedSquareIcon,
   CalculatorIcon,
   CogIcon,
+  EnvelopeOpenIcon,
+  PlusIcon,
   WalletIcon,
 } from "@heroicons/react/24/solid";
 import React from "react";
@@ -34,11 +36,11 @@ export default function Services() {
           to others
         </Different>
 
-        <Different icon={WalletIcon} title="Airtime Top Up">
+        <Different icon={PlusIcon} title="Airtime Top Up">
           Making an online recharge has become very easy and safe on Digit Data
         </Different>
 
-        <Different icon={WalletIcon} title="Bulk SMS">
+        <Different icon={EnvelopeOpenIcon} title="Bulk SMS">
           Send BulkSMS to any number for as low as just 2.5kobo per unit.
         </Different>
       </div>

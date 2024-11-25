@@ -16,6 +16,7 @@ import WhyIs from "./WhyIs";
 import Features from "./Features";
 import Plans from "./Plans";
 import Services from "./Services";
+import Footer from "./Footer";
 
 export default function LandingPage() {
   return (
@@ -81,6 +82,7 @@ export default function LandingPage() {
       <Features />
       <Plans />
       <Services />
+      <Footer />
     </div>
   );
 }
