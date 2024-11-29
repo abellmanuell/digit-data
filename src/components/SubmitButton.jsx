@@ -18,7 +18,7 @@ export default function SubmitButton({ value, formSubscribe: form }) {
             type="submit"
             disabled={!canSubmit}
           >
-            {isSubmitting ? <BeatLoader color="#ffffff" size="5" /> : value}
+            {isSubmitting ? <BeatLoader color="#ffffff" size="5px" /> : value}
           </button>
         );
       }}

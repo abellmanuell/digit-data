@@ -56,7 +56,10 @@ export default function SignUp() {
                 return (
                   <>
                     <FormInput
-                      fieldInfo={{ name: "", placeholder: "Email Address" }}
+                      fieldInfo={{
+                        name: "email",
+                        placeholder: "Email Address",
+                      }}
                       field={field}
                       label="Enter Address"
                     />
@@ -69,7 +72,7 @@ export default function SignUp() {
         </form>
 
         <p className="text-sm text-gray-600">
-          Already have an account?{" "}
+          Already have an accountt?{" "}
           <Link
             className="text-gray-900 font-medium hover:text-gray-950"
             to="/login"
@@ -80,12 +83,12 @@ export default function SignUp() {
 
         <div className="my-10">
           <span
-            className={cn(
-              "block bg-gray-200 w-full h-[0.5px] relative",
-              " before:content-['OR'] before:absolute before:-top-2.5 before:bg-white before:text-gray-900 before:text-sm before:px-6 before:left-32",
-              "text-center"
-            )}
-          ></span>
+            className={cn("block w-full h-[0.5px] relative", "text-center")}
+          >
+            <span className="text-sm absolute -top-2.5 translate-[50px] text-muted-foreground">
+              OR
+            </span>
+          </span>
         </div>
 
         <AuthButton value="Continue with Google" icon={FcGoogle} />

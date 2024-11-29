@@ -74,7 +74,7 @@ function LandingPageHeader() {
               </ListItem>
 
               <ListItem>
-                <Link to="/login">Sign Up</Link>
+                <Link to="/signup">Sign Up</Link>
               </ListItem>
             </ul>
 
@@ -114,7 +114,7 @@ function LandingPageHeader() {
             <ListItem>
               <Link
                 className="py-2 px-6 font-medium rounded-full bg-tw-blue-100 hover:bg-tw-blue-200"
-                to="/login"
+                to="/signup"
               >
                 Sign Up
               </Link>

@@ -19,6 +19,7 @@ function FormInput({
           required={isRequired}
         />
         <label
+          id={name}
           className={cn(
             "text-sm",
             "absolute -top-5 left-0",

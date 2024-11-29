@@ -12,7 +12,6 @@ import "./index.css";
 import ErrorBoundary from "@/pages/ErrorBoundary.jsx";
 import SignUp from "./pages/SignUp.jsx";
 import LandingPage from "./pages/spa/LandingPage.jsx";
-
 // Document Title
 document.title = "Digit Data";
 
