@@ -8,6 +8,23 @@ import FormInput from "@/components/FormInput";
 import SubmitButton from "@/components/SubmitButton";
 import { cn } from "../utils/cn";
 
+function navigate(url) {
+  window.location.href = url;
+}
+
+async function oauth() {
+  try {
+    const response = await fetch("http://127.0.0.1:3000/google-oauth-request", {
+      method: "POST",
+    });
+
+    const { url } = await response.json();
+    navigate(url);
+  } catch {
+    throw new Error("No Auth url");
+  }
+}
+
 export default function SignUp() {
   const form = useForm({
     onSubmit: async ({ value }) => {
@@ -91,7 +108,11 @@ export default function SignUp() {
           </span>
         </div>
 
-        <AuthButton value="Continue with Google" icon={FcGoogle} />
+        <AuthButton
+          value="Continue with Google"
+          icon={FcGoogle}
+          handleOauth={() => oauth()}
+        />
       </div>
 
       {/*****************************
@@ -118,10 +139,11 @@ export default function SignUp() {
   );
 }
 
-function AuthButton({ value, icon: Icon }) {
+function AuthButton({ value, icon: Icon, handleOauth }) {
   return (
     <div>
       <button
+        onClick={handleOauth}
         className={cn(
           "text-sm text-gray-900",
           "border w-full my-4 p-4",
