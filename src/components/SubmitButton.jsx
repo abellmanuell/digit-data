@@ -13,7 +13,8 @@ export default function SubmitButton({ value, formSubscribe: form }) {
               "p-4 w-full rounded-md font-medium text-sm",
               "bg-gray-900 hover:bg-gray-950 text-white",
               "focus:ring focus:ring-gray-600",
-              "transition-all"
+              "transition-all",
+              "disabled:bg-gray-950 disabled:opacity-50"
             )}
             type="submit"
             disabled={!canSubmit}

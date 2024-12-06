@@ -10,6 +10,7 @@ function FormInput({
     <>
       <div className="relative my-6">
         <input
+          type={name}
           name={name}
           value={field.state.meta.value}
           onBlur={field.handleBlur}
