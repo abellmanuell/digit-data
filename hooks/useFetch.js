@@ -9,9 +9,8 @@ export async function useFetch(url, method = "GET", data = {}) {
       body: JSON.stringify(data),
     });
 
-    const data = await response.json();
-    console.log(data);
-  } catch {
-    throw new Error();
+    return await response.json();
+  } catch (e) {
+    throw new Error(e);
   }
 }
