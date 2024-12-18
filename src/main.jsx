@@ -20,6 +20,7 @@ const router = createBrowserRouter(
     <Route path="/" errorElement={<ErrorBoundary />}>
       <Route index element={<LandingPage />} />
       <Route path="/signup" element={<SignUp />} />
+      {/* <Route path="/signin" element={<SignIn />} /> */}
     </Route>
   ),
   {
