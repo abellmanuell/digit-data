@@ -40,7 +40,7 @@ async function oauth() {
   }
 }
 
-export default function SignUp() {
+export default function SignIn() {
   if (getToken("token") && getToken("refresh_Token")) {
     navigate("/dashboard");
   }
@@ -54,13 +54,14 @@ export default function SignUp() {
     },
     onSubmit: async ({ value }) => {
       if (value.email && value.password) {
-        const data = await useFetch("/signup", "POST", value);
+        const data = await useFetch("/signin", "POST", value);
         if (data.status >= 200 && data.status <= 299) {
           toast.success(data.message);
           form.reset();
 
           setToken("token", data.token);
           setToken("refresh_Token", data.refresh_Token);
+          navigate("/dashboard");
         } else {
           toast.error(data.message);
         }
@@ -78,12 +79,12 @@ export default function SignUp() {
       </div>
       <section className="h-full md:grid grid-cols-2">
         {/*****************************
-         *      SIGN UP FORM           *
+         *      SIGN IN FORM           *
          *****************************/}
         <div className="sm:w-80 md:w-96 m-auto p-6">
           <AccountInOutHeader
-            title="Create Your Account"
-            description="Sign Up to Digit Data to continue to Digit Data."
+            title="Sign In to Your Account"
+            description="Sign In to Digit Data to continue to Digit Data."
           />
 
           <form
@@ -135,7 +136,7 @@ export default function SignUp() {
                         !value
                           ? "Password is required"
                           : value.length < 8
-                          ? "Passowrd must be at least 8 characters"
+                          ? "Password must be at least 8 characters"
                           : undefined,
                       onChangeAsyncDebounceMs: 500,
                       onChangeAsync: async ({ value }) => {
@@ -166,12 +167,12 @@ export default function SignUp() {
           </form>
 
           <p className="text-sm text-gray-600">
-            Already have an accountt?{" "}
+            Don't have an account?{" "}
             <Link
               className="text-gray-900 font-medium hover:text-gray-950"
-              to="/login"
+              to="/signup"
             >
-              Log in
+              Sign Up
             </Link>
           </p>
 

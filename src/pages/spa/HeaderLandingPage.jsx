@@ -70,7 +70,7 @@ function LandingPageHeader() {
               })}
 
               <ListItem>
-                <Link to="/login">Log In</Link>
+                <Link to="/signin">Log In</Link>
               </ListItem>
 
               <ListItem>
@@ -105,7 +105,7 @@ function LandingPageHeader() {
             <ListItem>
               <Link
                 className="bg-black text-white py-2 px-6 font-medium rounded-full"
-                to="/login"
+                to="/signin"
               >
                 Log In
               </Link>

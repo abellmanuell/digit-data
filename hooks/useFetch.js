@@ -9,7 +9,8 @@ export async function useFetch(url, method = "GET", data = {}) {
       body: JSON.stringify(data),
     });
 
-    return await response.json();
+    const responseData = await response.json();
+    return responseData;
   } catch (e) {
     throw new Error(e);
   }

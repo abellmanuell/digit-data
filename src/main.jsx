@@ -12,6 +12,8 @@ import "./index.css";
 import ErrorBoundary from "@/pages/ErrorBoundary.jsx";
 import SignUp from "./pages/SignUp.jsx";
 import LandingPage from "./pages/spa/LandingPage.jsx";
+import SignIn from "./pages/SignIn.jsx";
+import { UserProvider } from "../contexts/context.jsx";
 // Document Title
 document.title = "Digit Data";
 
@@ -20,7 +22,8 @@ const router = createBrowserRouter(
     <Route path="/" errorElement={<ErrorBoundary />}>
       <Route index element={<LandingPage />} />
       <Route path="/signup" element={<SignUp />} />
-      {/* <Route path="/signin" element={<SignIn />} /> */}
+      <Route path="/signin" element={<SignIn />} />
+      <Route path="/dashboard" element={<App />} />
     </Route>
   ),
   {
@@ -37,6 +40,8 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider future={{ v7_startTransition: true }} router={router} />
+    <UserProvider>
+      <RouterProvider future={{ v7_startTransition: true }} router={router} />
+    </UserProvider>
   </StrictMode>
 );
