@@ -8,7 +8,7 @@ import FormInput from "@/components/FormInput";
 import SubmitButton from "@/components/SubmitButton";
 import { cn } from "../utils/cn";
 import { useState } from "react";
-import { useFetch } from "../../hooks/useFetch";
+import fetcher from "../hooks/useFetch";
 import toast, { Toaster } from "react-hot-toast";
 import AuthButton from "@/components/AuthButton";
 
@@ -41,7 +41,7 @@ async function oauth() {
 }
 
 export default function SignIn() {
-  if (getToken("token") && getToken("refresh_Token")) {
+  if (getToken("token")) {
     navigate("/dashboard");
   }
 
@@ -54,13 +54,13 @@ export default function SignIn() {
     },
     onSubmit: async ({ value }) => {
       if (value.email && value.password) {
-        const data = await useFetch("/signin", "POST", value);
+        const data = await fetcher.post("/signin", value);
         if (data.status >= 200 && data.status <= 299) {
           toast.success(data.message);
           form.reset();
 
           setToken("token", data.token);
-          setToken("refresh_Token", data.refresh_Token);
+          setToken("refresh_token", data.refresh_token);
           navigate("/dashboard");
         } else {
           toast.error(data.message);

@@ -13,7 +13,7 @@ import ErrorBoundary from "@/pages/ErrorBoundary.jsx";
 import SignUp from "./pages/SignUp.jsx";
 import LandingPage from "./pages/spa/LandingPage.jsx";
 import SignIn from "./pages/SignIn.jsx";
-import { UserProvider } from "../contexts/context.jsx";
+import { UserProvider } from "./contexts/context.jsx";
 // Document Title
 document.title = "Digit Data";
 

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { UserContext } from "../../contexts/context";
+import { UserContext } from "../contexts/context";
 import {
   Sidebar,
   SidebarContent,
@@ -15,16 +15,37 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/components/ui/sidebar";
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+import {
+  Calendar,
+  Home,
+  Inbox,
+  Phone,
+  Search,
+  Settings,
+  Signal,
+  User,
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
+import dashboardServices from "../services/dashboard.service";
 
 export default function App() {
-  const { user, setUser } = useContext(UserContext);
+  const { token, setToken } = useContext(UserContext);
+  const [user, setUser] = React.useState({});
+  const [isLoading, setIsLoading] = React.useState(true);
   const navigate = useNavigate();
 
-  if (!user) {
+  if (!token) {
     window.location.href = "/signin";
   }
+
+  React.useEffect(() => {
+    (async () => {
+      const getUserData = await dashboardServices.getUserData(token);
+      setUser(getUserData);
+      setIsLoading(false);
+    })();
+  }, []);
 
   function logout() {
     localStorage.clear();
@@ -46,17 +67,17 @@ export default function App() {
     {
       title: "Buy Bulk SMS Data",
       url: "#",
-      icon: Calendar,
+      icon: Signal,
     },
     {
       title: "Buy Airtime",
       url: "#",
-      icon: Search,
+      icon: Phone,
     },
     {
       title: "Account",
       url: "#",
-      icon: Search,
+      icon: User,
     },
     {
       title: "Settings",
@@ -65,10 +86,22 @@ export default function App() {
     },
   ];
 
-  return (
+  return isLoading ? (
+    <div className="flex justify-center items-center h-screen">
+      <ClipLoader color="#000" loading={isLoading} size={100} />
+    </div>
+  ) : (
     <SidebarProvider>
       <Sidebar>
-        <SidebarHeader />
+        <SidebarHeader>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <div>
+                <strong>{user && user.email}</strong>
+              </div>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarHeader>
         <SidebarContent>
           <SidebarGroup />
           <SidebarGroupLabel>Menu</SidebarGroupLabel>
