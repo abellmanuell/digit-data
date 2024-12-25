@@ -11,6 +11,7 @@ import { useState } from "react";
 import fetcher from "../hooks/useFetch";
 import toast, { Toaster } from "react-hot-toast";
 import AuthButton from "@/components/AuthButton";
+import FieldInfo from "@/components/FieldInfo";
 
 function setToken(name, token) {
   localStorage.setItem(name, token);
@@ -114,13 +115,14 @@ export default function SignIn() {
                     return (
                       <>
                         <FormInput
-                          fieldInfo={{
-                            name: "email",
-                            placeholder: "Email Address",
-                          }}
+                          name="email"
+                          value={field.state.value}
+                          placeholder="Email Address"
                           field={field}
                           label="Enter Address"
-                        />
+                        >
+                          <FieldInfo field={field} />
+                        </FormInput>
                       </>
                     );
                   }}
@@ -149,13 +151,14 @@ export default function SignIn() {
                       return (
                         <>
                           <FormInput
-                            fieldInfo={{
-                              name: "password",
-                              placeholder: "Password",
-                            }}
+                            type="password"
+                            name={field.name}
+                            value={field.state.value}
                             field={field}
                             label="Password"
-                          />
+                          >
+                            <FieldInfo field={field} />
+                          </FormInput>
                         </>
                       );
                     }}

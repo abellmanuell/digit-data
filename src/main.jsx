@@ -1,4 +1,4 @@
-import { StrictMode } from "react";
+import { StrictMode, useContext } from "react";
 import { createRoot } from "react-dom/client";
 import {
   createBrowserRouter,
@@ -13,7 +13,10 @@ import ErrorBoundary from "@/pages/ErrorBoundary.jsx";
 import SignUp from "./pages/SignUp.jsx";
 import LandingPage from "./pages/spa/LandingPage.jsx";
 import SignIn from "./pages/SignIn.jsx";
-import { UserProvider } from "./contexts/context.jsx";
+import { TokenProvider } from "./contexts/context.jsx";
+import ProtectedRoute from "./components/protectedRoute/ProtectedRoute.jsx";
+import EditUser from "./pages/edit-user/EditUser.jsx";
+
 // Document Title
 document.title = "Digit Data";
 
@@ -23,7 +26,18 @@ const router = createBrowserRouter(
       <Route index element={<LandingPage />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/signin" element={<SignIn />} />
-      <Route path="/dashboard" element={<App />} />
+      <Route
+        element={
+          <ProtectedRoute
+            token={localStorage.getItem("token")}
+            redirectPath="/signin"
+          />
+        }
+      >
+        <Route path="/dashboard" element={<App />}>
+          <Route path="edit" element={<EditUser />} />
+        </Route>
+      </Route>
     </Route>
   ),
   {
@@ -40,8 +54,8 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <UserProvider>
+    <TokenProvider>
       <RouterProvider future={{ v7_startTransition: true }} router={router} />
-    </UserProvider>
+    </TokenProvider>
   </StrictMode>
 );

@@ -35,6 +35,25 @@ async function post(url, data = {}, token) {
   }
 }
 
-const fetcher = { get, post };
+async function put(url, data = {}, token) {
+  try {
+    const response = await fetch(import.meta.env.VITE_BASE_URL + url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token ? `Bearer ${token}` : "",
+      },
+      credentials: "include",
+      body: data ? JSON.stringify(data) : "",
+    });
+
+    const responseData = await response.json();
+    return responseData;
+  } catch (e) {
+    throw new Error(e);
+  }
+}
+
+const fetcher = { get, post, put };
 
 export default fetcher;
