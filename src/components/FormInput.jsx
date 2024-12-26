@@ -1,10 +1,10 @@
 import React from "react";
 import { cn } from "../utils/cn";
+import { CircleCheck, CircleX } from "lucide-react";
 
 function FormInput({
   type,
   name,
-  value,
   label,
   isRequired = false,
   field,
@@ -12,6 +12,8 @@ function FormInput({
   className,
   ...props
 }) {
+  console.log(field.state.meta);
+  const { isBlurred, isTouched, errors } = field.state.meta;
   return (
     <>
       <div className="relative my-8">
@@ -43,6 +45,12 @@ function FormInput({
         >
           {label}
         </label>
+        {/* <div className="absolute right-0 top-2 p-2">
+          {console.log(isTouched)}
+          {isTouched && errors.length == 0 ? (
+            <CircleCheck className="text-green-500" />
+          ) : undefined}
+        </div> */}
         {children ? children : ""}
       </div>
     </>

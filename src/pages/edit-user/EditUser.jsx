@@ -5,26 +5,32 @@ import FormInput from "@/components/FormInput";
 import SubmitButton from "@/components/SubmitButton";
 import { TokenContext, UserContext } from "../../contexts/context";
 import fetcher from "../../hooks/useFetch";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function EditUser() {
   const { user, setUser } = useContext(UserContext);
   const { token, setToken } = useContext(TokenContext);
   const form = useForm({
     defaultValues: {
-      email: user?.email,
-      given_name: user?.given_name,
-      family_name: user?.family_name,
-      phone_number: user?.phone_number || "",
+      email: user?.email ?? "",
+      given_name: user?.given_name ?? "",
+      family_name: user?.family_name ?? "",
+      phone_number: user?.phone_number ?? "",
     },
     onSubmit: async ({ value }) => {
-      console.log(value);
       const request = await fetcher.put("/api/user/profile/edit", value, token);
-      console.log(request);
+      if (request.status >= 200 && request.status <= 299) {
+        setUser(request.data);
+        toast.success(request.message);
+      } else {
+        toast.error(request.message);
+      }
     },
   });
 
   return (
-    <div>
+    <div className="w-full md:w-[500px]">
+      <Toaster toast={toast} />
       <Heading className="my-10">Edit Profile</Heading>
       <div>
         <form
@@ -32,13 +38,18 @@ export default function EditUser() {
             e.preventDefault();
             e.stopPropagation();
             form.handleSubmit();
-            form.reset();
           }}
         >
           <section>
             <div>
               <form.Field
                 name="given_name"
+                validators={{
+                  onChange: ({ value }) =>
+                    value.length < 3
+                      ? "Must be greater than 3 character"
+                      : undefined,
+                }}
                 children={(field) => {
                   return (
                     <>
@@ -63,7 +74,6 @@ export default function EditUser() {
                       <FormInput
                         type="text"
                         name={field.name}
-                        value={field.state.value}
                         label="Last name"
                         field={field}
                       />
@@ -81,9 +91,9 @@ export default function EditUser() {
                       <FormInput
                         type="email"
                         name={field.name}
-                        value={field.state.value}
                         label="Email Address"
                         field={field}
+                        isRequired={true}
                       />
                     </>
                   );
@@ -97,9 +107,8 @@ export default function EditUser() {
                   return (
                     <>
                       <FormInput
-                        type="text"
+                        type="number"
                         name={field.name}
-                        value={field.state.value}
                         label="Phone Number"
                         field={field}
                       />

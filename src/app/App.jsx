@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { TokenContext, UserContext } from "../contexts/context";
+import { IsLoadingContext, UserContext } from "../contexts/context";
 import {
   Sidebar,
   SidebarContent,
@@ -15,24 +15,22 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/components/ui/sidebar";
-import { Home, Inbox, Phone, Settings, Signal, User } from "lucide-react";
-import { Outlet, useNavigate } from "react-router-dom";
+import {
+  Home,
+  Inbox,
+  Phone,
+  Settings,
+  Signal,
+  SquarePen,
+  User,
+} from "lucide-react";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
-import dashboardServices from "../services/dashboard.service";
 
 export default function App() {
-  const { token, setToken } = useContext(TokenContext);
   const { user, setUser } = useContext(UserContext);
-  const [isLoading, setIsLoading] = React.useState(true);
+  const { isLoading, setIsLoading } = useContext(IsLoadingContext);
   const navigate = useNavigate();
-
-  React.useEffect(() => {
-    (async () => {
-      const getUserData = await dashboardServices.getUserData(token);
-      setUser(getUserData);
-      setIsLoading(false);
-    })();
-  }, []);
 
   function logout() {
     localStorage.clear();
@@ -47,6 +45,11 @@ export default function App() {
       icon: Home,
     },
     {
+      title: "Buy Airtime",
+      url: "buyairtime",
+      icon: Phone,
+    },
+    {
       title: "Buy Data",
       url: "#",
       icon: Inbox,
@@ -55,11 +58,6 @@ export default function App() {
       title: "Buy Bulk SMS Data",
       url: "#",
       icon: Signal,
-    },
-    {
-      title: "Buy Airtime",
-      url: "#",
-      icon: Phone,
     },
     {
       title: "Account",
@@ -85,8 +83,26 @@ export default function App() {
             <SidebarHeader>
               <SidebarMenu>
                 <SidebarMenuItem>
-                  <div>
-                    <strong>{user && user.email}</strong>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h1>
+                        <strong>
+                          {user.given_name ?? user.given_name}{" "}
+                          {user.family_name ?? user.family_name}
+                        </strong>
+                      </h1>
+                      <p className="text-sm text-ellipsis overflow-hidden max-w-40">
+                        {user && user.email}
+                      </p>
+                    </div>
+                    <div>
+                      <Link
+                        to="edit"
+                        className="hover:bg-sidebar-foreground/5 rounded-sm block p-2"
+                      >
+                        <SquarePen size="20" />
+                      </Link>
+                    </div>
                   </div>
                 </SidebarMenuItem>
               </SidebarMenu>
@@ -99,10 +115,10 @@ export default function App() {
                   {items.map((item) => (
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton asChild>
-                        <a href={item.url}>
+                        <Link to={item.url}>
                           <item.icon />
                           <span>{item.title}</span>
-                        </a>
+                        </Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   ))}

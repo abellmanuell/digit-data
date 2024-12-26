@@ -55,15 +55,15 @@ export default function SignUp() {
     },
     onSubmit: async ({ value }) => {
       if (value.email && value.password) {
-        const data = await fetcher.post("/signup", value);
-        if (data.status >= 200 && data.status <= 299) {
-          toast.success(data.message);
+        const request = await fetcher.post("/signup", value);
+        if (request.status >= 200 && request.status <= 299) {
+          toast.success(request.message);
           form.reset();
 
-          setToken("token", data.token);
-          setToken("refresh_token", data.refresh_token);
+          setToken("token", request.token);
+          setToken("refresh_token", request.refresh_token);
         } else {
-          toast.error(data.message);
+          toast.error(request.message);
         }
       } else {
         setIsPasswordShow(true);

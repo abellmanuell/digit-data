@@ -16,6 +16,7 @@ import SignIn from "./pages/SignIn.jsx";
 import { TokenProvider } from "./contexts/context.jsx";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute.jsx";
 import EditUser from "./pages/edit-user/EditUser.jsx";
+import BuyAirtime from "./pages/buyairtime/BuyAirtime.jsx";
 
 // Document Title
 document.title = "Digit Data";
@@ -36,6 +37,7 @@ const router = createBrowserRouter(
       >
         <Route path="/dashboard" element={<App />}>
           <Route path="edit" element={<EditUser />} />
+          <Route path="buyairtime" element={<BuyAirtime />} />
         </Route>
       </Route>
     </Route>

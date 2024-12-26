@@ -9,7 +9,6 @@ async function getUserData(token) {
       const request = await fetcher.post("/api/refresh-token", {
         refresh_token: localStorage.getItem("refresh_token"),
       });
-      console.log(request);
 
       if (request.status >= 200 && request.status <= 299) {
         localStorage.setItem("token", request.token);
