@@ -93,7 +93,7 @@ export default function EditUser() {
                         name={field.name}
                         label="Email Address"
                         field={field}
-                        isRequired={true}
+                        disabled={true}
                       />
                     </>
                   );

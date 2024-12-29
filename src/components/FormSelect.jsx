@@ -8,12 +8,13 @@ import {
   SelectValue,
 } from "@/components/components/ui/select";
 
-export default function FormSelect({ placeholder, items }) {
-  console.log(items);
-
+export default function FormSelect({ placeholder, items, children, field }) {
   return (
     <div className="my-8">
-      <Select>
+      <Select
+        onValueChange={field.handleChange}
+        defaultValue={field.state.value}
+      >
         <SelectTrigger>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
@@ -27,6 +28,7 @@ export default function FormSelect({ placeholder, items }) {
           })}
         </SelectContent>
       </Select>
+      {children ? children : ""}
     </div>
   );
 }

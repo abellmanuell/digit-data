@@ -1,33 +1,75 @@
+import AlertDialog from "@/components/AlertDialog";
+import FieldInfo from "@/components/FieldInfo";
 import FormInput from "@/components/FormInput";
 import FormSelect from "@/components/FormSelect";
 import Heading from "@/components/Heading";
 import SubmitButton from "@/components/SubmitButton";
 import { useForm } from "@tanstack/react-form";
-import React from "react";
+import React, { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
+import { ClipLoader } from "react-spinners";
 
 export default function BuyAirtime() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [buyAirtime, setBuyAirtime] = useState(null);
+
   const form = useForm({
     defaultValues: {
-      networks: [],
-      airtime_types: [],
-      mobile_number: 0 || undefined,
-      amount: 0 || undefined,
+      network: "",
+      airtime_type: "",
+      mobile_number: 0 || "",
+      amount: 0 || "",
+    },
+    onSubmit: async ({ value }) => {
+      setBuyAirtime(value);
+    },
+    validators: {
+      onChange: ({ value }) => {
+        return {
+          fields: {
+            network: !value.network ? "Network is required" : undefined,
+            amount: !value.amount ? "Amount is required" : undefined,
+            mobile_number: !value.mobile_number
+              ? "Mobile Number is required"
+              : undefined,
+
+            airtime_type: !value.airtime_type
+              ? "Airtime Type is required"
+              : undefined,
+          },
+        };
+      },
     },
   });
-  return (
-    <div>
-      <Heading className="my-10">Buy Airtime</Heading>
 
+  return isLoading ? (
+    <div className="flex justify-center items-center h-screen">
+      <ClipLoader color="#000" loading={isLoading} size={100} />
+    </div>
+  ) : (
+    <div className="w-full md:w-[500px]">
+      <Toaster position="top-left" reverseOrder={true} />
+      <Heading className="my-10">Buy Airtime</Heading>
       <form
         onSubmit={(e) => {
           e.preventDefault();
           e.stopPropagation();
+          const { network, airtime_type, mobile_number, amount } =
+            form.state.values;
+
+          if (!network && !airtime_type && !mobile_number && !amount) {
+            form.handleSubmit();
+            return;
+          }
           form.handleSubmit();
+          setIsOpen(true);
         }}
       >
         <div>
           <form.Field
-            name="networks"
+            name="network"
+            mode="array"
             children={(field) => {
               return (
                 <FormSelect
@@ -37,14 +79,17 @@ export default function BuyAirtime() {
                     { value: "airtel", name: "Airtel" },
                     { value: "glo", name: "GLO" },
                   ]}
-                />
+                  field={field}
+                >
+                  <FieldInfo field={field} />
+                </FormSelect>
               );
             }}
           />
         </div>
         <div>
           <form.Field
-            name="airtime_types"
+            name="airtime_type"
             children={(field) => {
               return (
                 <FormSelect
@@ -53,7 +98,10 @@ export default function BuyAirtime() {
                     { value: "vtu", name: "VTU" },
                     { value: "share_sell", name: "Share or Sell" },
                   ]}
-                />
+                  field={field}
+                >
+                  <FieldInfo field={field} />
+                </FormSelect>
               );
             }}
           />
@@ -70,7 +118,9 @@ export default function BuyAirtime() {
                     name={field.name}
                     value={field.state.value}
                     field={field}
-                  />
+                  >
+                    <FieldInfo field={field} />
+                  </FormInput>
                 </>
               );
             }}
@@ -88,7 +138,9 @@ export default function BuyAirtime() {
                     name={field.name}
                     value={field.state.value}
                     field={field}
-                  />
+                  >
+                    <FieldInfo field={field} />
+                  </FormInput>
                 </>
               );
             }}
@@ -96,6 +148,16 @@ export default function BuyAirtime() {
         </div>
         <SubmitButton formSubscribe={form} value="Buy Airtime" />{" "}
       </form>
+
+      <AlertDialog
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        onCancel={() => setIsOpen(false)}
+        onSubmit={() => {
+          setIsOpen(false);
+          form.reset();
+        }}
+      />
     </div>
   );
 }

@@ -14,12 +14,11 @@ function FormInput({
   placeholder,
   ...props
 }) {
-  console.log(placeholder, label);
   return (
     <>
       <div className="relative my-8">
         <Input
-          // type={type}
+          type={type}
           name={name}
           value={field.state.value}
           onBlur={field.handleBlur}
