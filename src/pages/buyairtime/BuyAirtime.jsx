@@ -5,19 +5,46 @@ import FormSelect from "@/components/FormSelect";
 import Heading from "@/components/Heading";
 import SubmitButton from "@/components/SubmitButton";
 import { useForm } from "@tanstack/react-form";
-import React, { useState } from "react";
+import fetcher from "../../hooks/useFetch";
+import React, { useContext, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
+import { TokenContext } from "../../contexts/context";
 
 export default function BuyAirtime() {
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [buyAirtime, setBuyAirtime] = useState(null);
+  const [networks, setNetworks] = useState([]);
+  const [airtimeType, setAirtimeType] = useState([]);
+  const { token, setToken } = useContext(TokenContext);
+
+  async function loadNetworkAndAirtimeType() {
+    try {
+      const networks = await fetcher.get("/api/networks");
+      const airtimeType = await fetcher.get("/api/airtime-type");
+      if (networks.status >= 200 && networks.status < 299) {
+        setNetworks(networks.data);
+        if (airtimeType.status >= 200 && airtimeType.status < 299) {
+          setAirtimeType(airtimeType.data);
+          setIsLoading(true);
+        }
+      } else {
+        toast.error("Unexpected error occurred!");
+      }
+    } catch {
+      throw new Error();
+    }
+  }
+
+  React.useEffect(() => {
+    loadNetworkAndAirtimeType();
+  }, []);
 
   const form = useForm({
     defaultValues: {
-      network: "",
-      airtime_type: "",
+      network: 0 || "",
+      airtime_type: 0 || "",
       mobile_number: 0 || "",
       amount: 0 || "",
     },
@@ -43,7 +70,7 @@ export default function BuyAirtime() {
     },
   });
 
-  return isLoading ? (
+  return !isLoading ? (
     <div className="flex justify-center items-center h-screen">
       <ClipLoader color="#000" loading={isLoading} size={100} />
     </div>
@@ -74,11 +101,7 @@ export default function BuyAirtime() {
               return (
                 <FormSelect
                   placeholder="Select Network"
-                  items={[
-                    { value: "mtn", name: "MTN" },
-                    { value: "airtel", name: "Airtel" },
-                    { value: "glo", name: "GLO" },
-                  ]}
+                  items={networks}
                   field={field}
                 >
                   <FieldInfo field={field} />
@@ -94,10 +117,7 @@ export default function BuyAirtime() {
               return (
                 <FormSelect
                   placeholder="Select Airtime Type"
-                  items={[
-                    { value: "vtu", name: "VTU" },
-                    { value: "share_sell", name: "Share or Sell" },
-                  ]}
+                  items={airtimeType}
                   field={field}
                 >
                   <FieldInfo field={field} />
@@ -156,8 +176,17 @@ export default function BuyAirtime() {
         onSubmit={() => {
           setIsOpen(false);
           form.reset();
+          const { _id } = networks.find(
+            (network) => network.name === buyAirtime.network
+          );
+          buy({ ...buyAirtime, network: _id }, token);
         }}
       />
     </div>
   );
+}
+
+async function buy(data, token) {
+  const request = await fetcher.post("/api/topup", data, token);
+  console.log(request);
 }

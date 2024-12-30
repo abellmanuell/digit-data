@@ -12,8 +12,9 @@ export default function FormSelect({ placeholder, items, children, field }) {
   return (
     <div className="my-8">
       <Select
+        name={field.name}
         onValueChange={field.handleChange}
-        defaultValue={field.state.value}
+        value={field.state.value}
       >
         <SelectTrigger>
           <SelectValue placeholder={placeholder} />
@@ -21,7 +22,7 @@ export default function FormSelect({ placeholder, items, children, field }) {
         <SelectContent>
           {items.map((item) => {
             return (
-              <SelectItem key={item.value} value={item.value}>
+              <SelectItem key={item._id} value={item.name}>
                 {item.name}
               </SelectItem>
             );
