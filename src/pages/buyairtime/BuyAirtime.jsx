@@ -10,6 +10,7 @@ import React, { useContext, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
 import { TokenContext } from "../../contexts/context";
+import topUpServices from "../../services/topup.service";
 
 export default function BuyAirtime() {
   const [isLoading, setIsLoading] = useState(false);
@@ -187,6 +188,12 @@ export default function BuyAirtime() {
 }
 
 async function buy(data, token) {
-  const request = await fetcher.post("/api/topup", data, token);
+  const request = await topUpServices.topUp(data, token);
   console.log(request);
+
+  if (request.status >= 200 && request.status <= 299) {
+    toast.success(request.message);
+  } else {
+    toast.error(request.message);
+  }
 }

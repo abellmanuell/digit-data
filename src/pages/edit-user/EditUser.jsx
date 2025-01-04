@@ -4,8 +4,8 @@ import { useForm } from "@tanstack/react-form";
 import FormInput from "@/components/FormInput";
 import SubmitButton from "@/components/SubmitButton";
 import { TokenContext, UserContext } from "../../contexts/context";
-import fetcher from "../../hooks/useFetch";
 import toast, { Toaster } from "react-hot-toast";
+import userServices from "../../services/user.service";
 
 export default function EditUser() {
   const { user, setUser } = useContext(UserContext);
@@ -18,7 +18,8 @@ export default function EditUser() {
       phone_number: user?.phone_number ?? "",
     },
     onSubmit: async ({ value }) => {
-      const request = await fetcher.put("/api/user/profile/edit", value, token);
+      const request = await userServices.updateUser(value, token);
+      console.log(request);
       if (request.status >= 200 && request.status <= 299) {
         setUser(request.data);
         toast.success(request.message);
