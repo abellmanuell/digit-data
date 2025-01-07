@@ -60,7 +60,7 @@ const HeroSection = () => {
                   "font-bold py-4 px-10 text-sm rounded-full space-x-2 ",
                   "flex items-center justify-center"
                 )}
-                to="/login"
+                to="/signin"
                 name="Get Started"
               >
                 <IconButton Icon={CursorArrowRippleIcon} />

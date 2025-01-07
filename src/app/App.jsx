@@ -41,7 +41,7 @@ export default function App() {
   const items = [
     {
       title: "Home",
-      url: "#",
+      url: "/dashboard",
       icon: Home,
     },
     {
@@ -70,6 +70,7 @@ export default function App() {
       icon: Settings,
     },
   ];
+  console.log(user);
 
   return isLoading ? (
     <div className="flex justify-center items-center h-screen">
@@ -85,14 +86,23 @@ export default function App() {
                 <SidebarMenuItem>
                   <div className="flex items-center justify-between">
                     <div>
-                      <h1>
-                        <strong>
-                          {user.given_name ?? user.given_name}{" "}
-                          {user.family_name ?? user.family_name}
-                        </strong>
-                      </h1>
-                      <p className="text-sm text-ellipsis overflow-hidden max-w-40">
-                        {user && user.email}
+                      <div className="mb-2">
+                        <h1>
+                          <strong>
+                            {user.given_name ?? user.given_name}{" "}
+                            {user.family_name ?? user.family_name}
+                          </strong>
+                        </h1>
+                        <p className="text-sm text-ellipsis overflow-hidden max-w-40 text-gray-500">
+                          {user && user.email}
+                        </p>
+                      </div>
+                      <p className="text-sm">
+                        <span className="text-gray-500">Balance </span>
+                        {new Intl.NumberFormat("en-US", {
+                          style: "currency",
+                          currency: "NGN",
+                        }).format(user.wallet_balance)}
                       </p>
                     </div>
                     <div>
