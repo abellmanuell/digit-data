@@ -11,7 +11,9 @@ import toast, { Toaster } from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
 import { TokenContext, UserContext } from "../../contexts/context";
 import topUpServices from "../../services/topup.service";
-import { Wallet } from "lucide-react";
+import { FileClock, FolderClock, History, Wallet } from "lucide-react";
+import { Link } from "react-router-dom";
+import Transactions from "@/components/Transactions";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
@@ -78,7 +80,7 @@ export default function Home() {
       <ClipLoader color="#000" loading={isLoading} size={100} />
     </div>
   ) : (
-    <div className="w-full md:w-[500px]">
+    <div className="w-full">
       <Toaster position="top-left" reverseOrder={true} />
 
       <div className="my-10">
@@ -107,9 +109,41 @@ export default function Home() {
         </div>
 
         <div>
-          <button className="bg-black text-white rounded-md font-bold px-6 py-2">
+          <Link
+            to="fund_wallet"
+            className="bg-black text-white rounded-md font-bold px-6 py-4"
+          >
             Add Fund
-          </button>
+          </Link>
+        </div>
+      </div>
+
+      <div className="my-20">
+        <p className="text-sm">History</p>
+        <div className=" grid sm:grid-cols-2 md:grid-cols-3">
+          <Transactions
+            name="All Transactions"
+            href="/all_transactions"
+            className="bg-black text-white"
+          >
+            <History size={30} />
+          </Transactions>
+
+          <Transactions
+            name="Airtime Transactions"
+            href="/airtime_transactions"
+            className="bg-gray-100 hover:bg-gray-200"
+          >
+            <FileClock size={30} />
+          </Transactions>
+
+          <Transactions
+            name="Data Transactions"
+            href="/data_transactions"
+            className="bg-gray-100 hover:bg-gray-200"
+          >
+            <FolderClock size={30} />
+          </Transactions>
         </div>
       </div>
     </div>
