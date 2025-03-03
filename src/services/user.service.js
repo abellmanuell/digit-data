@@ -8,11 +8,18 @@ async function getUserData(token) {
       return request;
     } else if (request.status === 401) {
       const token = await refreshToken();
-      return await getUserData(token);
+
+      if (token.status !== 404) {
+        return await getUserData(token);
+      } else {
+        localStorage.clear();
+      }
     } else {
       throw new Error(data.message);
     }
   } catch (e) {
+    console.log(e);
+
     throw new Error(e);
   }
 }
@@ -24,8 +31,14 @@ async function updateUser(data, token) {
       return request;
     } else if (request.status === 401) {
       const token = await refreshToken();
-      return await updateUser(data, token);
+
+      if (token.status !== 404) {
+        return await updateUser(data, token);
+      } else {
+        localStorage.clear();
+      }
     } else {
+      localStorage.clear();
       throw new Error(request.message);
     }
   } catch (e) {

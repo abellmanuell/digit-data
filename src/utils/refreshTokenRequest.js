@@ -10,7 +10,7 @@ async function refreshToken() {
     localStorage.setItem("refresh_token", request.refresh_token);
     return request.token;
   } else {
-    throw new Error(token.message);
+    return request;
   }
 }
 
