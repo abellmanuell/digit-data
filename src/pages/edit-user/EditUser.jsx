@@ -19,7 +19,6 @@ export default function EditUser() {
     },
     onSubmit: async ({ value }) => {
       const request = await userServices.updateUser(value, token);
-      console.log(request);
       if (request.status >= 200 && request.status <= 299) {
         setUser(request.data);
         toast.success(request.message);

@@ -20,6 +20,7 @@ export default function BuyAirtime() {
   const [airtimeType, setAirtimeType] = useState([]);
   const { token, setToken } = useContext(TokenContext);
 
+  /* Get Networks */
   async function loadNetworkAndAirtimeType() {
     try {
       const networks = await fetcher.get("/api/networks");
@@ -155,7 +156,7 @@ export default function BuyAirtime() {
                 <>
                   <FormInput
                     type="number"
-                    placeholder="Enter amount"
+                    placeholder="Enter amount Min. ₦50"
                     name={field.name}
                     value={field.state.value}
                     field={field}

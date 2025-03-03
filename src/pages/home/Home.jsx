@@ -1,79 +1,40 @@
-import AlertDialog from "@/components/AlertDialog";
-import FieldInfo from "@/components/FieldInfo";
-import FormInput from "@/components/FormInput";
-import FormSelect from "@/components/FormSelect";
-import Heading from "@/components/Heading";
-import SubmitButton from "@/components/SubmitButton";
-import { useForm } from "@tanstack/react-form";
 import fetcher from "../../hooks/useFetch";
 import React, { useContext, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
 import { TokenContext, UserContext } from "../../contexts/context";
-import topUpServices from "../../services/topup.service";
-import { FileClock, FolderClock, History, Wallet } from "lucide-react";
+
+import {
+  FileClock,
+  FolderClock,
+  History,
+  HistoryIcon,
+  Phone,
+  Signal,
+  Wallet,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import Transactions from "@/components/Transactions";
+import { Input } from "@/components/components/ui/input";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/components/ui/table";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-  const [buyAirtime, setBuyAirtime] = useState(null);
-  const [networks, setNetworks] = useState([]);
-  const [airtimeType, setAirtimeType] = useState([]);
-  const { token, setToken } = useContext(TokenContext);
   const { user, setUser } = useContext(UserContext);
 
-  async function loadNetworkAndAirtimeType() {
-    try {
-      const networks = await fetcher.get("/api/networks");
-      const airtimeType = await fetcher.get("/api/airtime-type");
-      if (networks.status >= 200 && networks.status < 299) {
-        setNetworks(networks.data);
-        if (airtimeType.status >= 200 && airtimeType.status < 299) {
-          setAirtimeType(airtimeType.data);
-          setIsLoading(true);
-        }
-      } else {
-        toast.error("Unexpected error occurred!");
-      }
-    } catch {
-      throw new Error();
-    }
-  }
-
   React.useEffect(() => {
-    loadNetworkAndAirtimeType();
+    user && setIsLoading(true);
   }, []);
 
-  const form = useForm({
-    defaultValues: {
-      network: 0 || "",
-      airtime_type: 0 || "",
-      mobile_number: 0 || "",
-      amount: 0 || "",
-    },
-    onSubmit: async ({ value }) => {
-      setBuyAirtime(value);
-    },
-    validators: {
-      onChange: ({ value }) => {
-        return {
-          fields: {
-            network: !value.network ? "Network is required" : undefined,
-            amount: !value.amount ? "Amount is required" : undefined,
-            mobile_number: !value.mobile_number
-              ? "Mobile Number is required"
-              : undefined,
-
-            airtime_type: !value.airtime_type
-              ? "Airtime Type is required"
-              : undefined,
-          },
-        };
-      },
-    },
-  });
+  const transactions = [].slice(0, 5);
 
   return !isLoading ? (
     <div className="flex justify-center items-center h-screen">
@@ -83,14 +44,20 @@ export default function Home() {
     <div className="w-full">
       <Toaster position="top-left" reverseOrder={true} />
 
+      {/* Welcome user */}
       <div className="my-10">
         <h3 className="text-2xl">
-          Welcome <strong>{user.given_name}</strong>!
+          Welcome <strong>{user.given_name || user.email} 🎉</strong>!
         </h3>
+        <p className="text-sm text-gray-500 mt-2">
+          To your world of endless services is ready and waiting let’s make
+          today amazing!"
+        </p>
       </div>
 
-      <div>
-        <div className="bg-orange-100 max-w-[300px] rounded-md p-5 my-5 flex items-center space-x-5">
+      {/* Wallet Card */}
+      <div className="md:flex items-center md:space-x-10">
+        <div className="bg-orange-100/70 w-[300px] rounded-md p-5 my-5 flex items-center space-x-5">
           <div>
             <Wallet size={30} className="text-gray-500" />
           </div>
@@ -111,15 +78,17 @@ export default function Home() {
         <div>
           <Link
             to="fund_wallet"
-            className="bg-black text-white rounded-md font-bold px-6 py-4"
+            className="bg-black text-white rounded-md font-bold px-4 py-2 text-sm"
           >
             Add Fund
           </Link>
         </div>
       </div>
 
-      <div className="my-20">
-        <p className="text-sm">History</p>
+      <ListActionsButton />
+
+      <div className="mb-10">
+        <p className="text-sm font-bold">History</p>
         <div className=" grid sm:grid-cols-2 md:grid-cols-3">
           <Transactions
             name="All Transactions"
@@ -146,6 +115,83 @@ export default function Home() {
           </Transactions>
         </div>
       </div>
+
+      <div>
+        <div className="flex items-center justify-center">
+          <p className="text-sm grow font-bold">Recent Transactions</p>
+          <Link
+            to="/transactions"
+            className="text-sm hover:font-medium transition-all"
+          >
+            See More
+          </Link>
+        </div>
+
+        {/* Transactions Histroy Table */}
+        <section className="border border-gray-100 rounded-md mt-4">
+          {transactions.length ? (
+            <Table>
+              <TableCaption>A list of your recent transactions.</TableCaption>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-[100px]">Transaction</TableHead>
+                  <TableHead>Method</TableHead>
+                  <TableHead className="text-right">Amount</TableHead>
+                  <TableHead>Date</TableHead>
+                  <TableHead>Status</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {transactions.map((transaction, index) => {
+                  return (
+                    <TableRow key={transaction.invoice}>
+                      <TableCell className="font-medium">INV001</TableCell>
+                      <TableCell>Credit Card</TableCell>
+                      <TableCell className="text-right">$250.00</TableCell>
+                      <TableCell>Jul 25, 2025</TableCell>
+                      <TableCell>Paid</TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          ) : (
+            <div className="h-52 w-full flex flex-col space-y-2 items-center justify-center">
+              <HistoryIcon className="text-gray-700" />
+              <p className="text-sm text-gray-500">No Transactions</p>
+            </div>
+          )}
+        </section>
+      </div>
     </div>
   );
 }
+
+/* Shortcut Links */
+const ListActionsButton = () => {
+  const actions = [
+    { name: "Buy Airtime", url: "buyairtime", Icon: Phone },
+    { name: "Buy Data", url: "#", Icon: Signal },
+  ];
+
+  return (
+    <div className="mt-10 mb-10">
+      <div className=" grid grid-cols-3 sm:grid-cols-5 md:grid-cols-8 gap-2">
+        {actions.map(({ name, url, Icon }) => {
+          return (
+            <Link
+              key={name}
+              to={url}
+              className="p-4 border hover:border-gray-100 flex flex-col items-center space-y-2 rounded-md group text-gray-800"
+            >
+              <span className="inline-block p-2  group-hover:bg-gray-200 rounded-md group-hover:text-gray-500 transition-all">
+                <Icon size={20} />
+              </span>
+              <p className="text-sm text-center">{name}</p>
+            </Link>
+          );
+        })}
+      </div>
+    </div>
+  );
+};

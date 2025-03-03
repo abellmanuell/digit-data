@@ -70,7 +70,6 @@ export default function App() {
       icon: Settings,
     },
   ];
-  console.log(user);
 
   return isLoading ? (
     <div className="flex justify-center items-center h-screen">

@@ -54,25 +54,35 @@ export default function SignIn() {
       password: "",
     },
     onSubmit: async ({ value }) => {
-      if (value.email && value.password) {
-        const data = await fetcher.post("/signin", value);
-        if (data.status >= 200 && data.status <= 299) {
-          toast.success(data.message);
-          form.reset();
+      try {
+        if (value.email && value.password) {
+          const data = await fetcher.post("/signin", value);
+          if (data.status >= 200 && data.status <= 299) {
+            toast.success(data.message);
+            form.reset();
 
-          setToken("token", data.token);
-          setToken("refresh_token", data.refresh_token);
-          navigate("/dashboard");
+            setToken("token", data.token);
+            setToken("refresh_token", data.refresh_token);
+            navigate("/dashboard");
+          } else {
+            toast.error(data.message);
+          }
         } else {
-          toast.error(data.message);
+          setIsPasswordShow(true);
         }
-      } else {
-        setIsPasswordShow(true);
+      } catch {
+        toast.error("Something unusual happened!");
+        console.error("Error occurred");
       }
     },
   });
 
+  /* 
+    DON'T REALLY UNDERSTAND useStore
+    Read Docs later
+  */
   const email = form.useStore((state) => state.values.email);
+
   return (
     <>
       <div>
