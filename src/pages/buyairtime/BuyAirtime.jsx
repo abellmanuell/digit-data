@@ -25,6 +25,7 @@ export default function BuyAirtime() {
     try {
       const networks = await fetcher.get("/api/networks");
       const airtimeType = await fetcher.get("/api/airtime-type");
+
       if (networks.status >= 200 && networks.status < 299) {
         setNetworks(networks.data);
         if (airtimeType.status >= 200 && airtimeType.status < 299) {

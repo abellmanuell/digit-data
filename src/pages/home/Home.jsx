@@ -85,6 +85,7 @@ export default function Home() {
         </div>
       </div>
 
+      {/* Shortcurt action btn */}
       <ListActionsButton />
 
       <div className="mb-10">
@@ -176,7 +177,7 @@ const ListActionsButton = () => {
 
   return (
     <div className="mt-10 mb-10">
-      <div className=" grid grid-cols-3 sm:grid-cols-5 md:grid-cols-8 gap-2">
+      <div className=" grid grid-cols-3 sm:grid-cols-5 md:grid-cols-4 lg:grid-cols-8 gap-2">
         {actions.map(({ name, url, Icon }) => {
           return (
             <Link
