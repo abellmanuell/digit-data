@@ -15,7 +15,6 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import Transactions from "@/components/Transactions";
-import { Input } from "@/components/components/ui/input";
 import {
   Table,
   TableBody,
@@ -25,16 +24,36 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/components/ui/table";
+import transactionsServices from "../../services/transactions.service";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingTable, setIsLoadingTable] = useState(false);
+  const { token, setToken } = useContext(TokenContext);
   const { user, setUser } = useContext(UserContext);
+  const [transactions, setTransactions] = useState([]);
 
+  async function loadTransactions() {
+    try {
+      const transactions = await transactionsServices.getTransactions(
+        {
+          _id: user._id,
+        },
+        token
+      );
+      setTransactions(transactions.data);
+      setIsLoadingTable(true);
+    } catch {
+      toast.error("Unexpected error occurred loading table!");
+      throw new Error("Unexpected error occurred loading table!");
+    }
+  }
+
+  console.log(transactions);
   React.useEffect(() => {
+    loadTransactions();
     user && setIsLoading(true);
   }, []);
-
-  const transactions = [].slice(0, 5);
 
   return !isLoading ? (
     <div className="flex justify-center items-center h-screen">
@@ -102,7 +121,7 @@ export default function Home() {
           <Transactions
             name="Airtime Transactions"
             href="/airtime_transactions"
-            className="bg-gray-100 hover:bg-gray-200"
+            className="bg-gray-100 hover:bg-gray-200 opacity-60 cursor-not-allowed"
           >
             <FileClock size={30} />
           </Transactions>
@@ -110,7 +129,7 @@ export default function Home() {
           <Transactions
             name="Data Transactions"
             href="/data_transactions"
-            className="bg-gray-100 hover:bg-gray-200"
+            className="bg-gray-100 hover:bg-gray-200 opacity-70 cursor-not-allowed"
           >
             <FolderClock size={30} />
           </Transactions>
@@ -131,31 +150,45 @@ export default function Home() {
         {/* Transactions Histroy Table */}
         <section className="border border-gray-100 rounded-md mt-4">
           {transactions.length ? (
-            <Table>
-              <TableCaption>A list of your recent transactions.</TableCaption>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-[100px]">Transaction</TableHead>
-                  <TableHead>Method</TableHead>
-                  <TableHead className="text-right">Amount</TableHead>
-                  <TableHead>Date</TableHead>
-                  <TableHead>Status</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {transactions.map((transaction, index) => {
-                  return (
-                    <TableRow key={transaction.invoice}>
-                      <TableCell className="font-medium">INV001</TableCell>
-                      <TableCell>Credit Card</TableCell>
-                      <TableCell className="text-right">$250.00</TableCell>
-                      <TableCell>Jul 25, 2025</TableCell>
-                      <TableCell>Paid</TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
+            !isLoadingTable ? (
+              <>
+                <div className="flex justify-center items-center h-screen">
+                  <ClipLoader color="#000" loading={isLoading} size={100} />
+                </div>
+              </>
+            ) : (
+              <Table>
+                <TableCaption>A list of your recent transactions.</TableCaption>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-[100px]">
+                      Transaction Reference
+                    </TableHead>
+                    <TableHead>Phone Number</TableHead>
+                    <TableHead className="text-right">Amount</TableHead>
+                    <TableHead>Date</TableHead>
+                    <TableHead>Status</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {transactions.slice(0, 5).map((transaction, index) => {
+                    const { reference, date, status, mobile_number, amount } =
+                      transaction;
+                    return (
+                      <TableRow key={transaction._id}>
+                        <TableCell className="font-medium">
+                          {reference}
+                        </TableCell>
+                        <TableCell>{mobile_number}</TableCell>
+                        <TableCell className="text-right">₦{amount}</TableCell>
+                        <TableCell>{date}</TableCell>
+                        <TableCell>{status}</TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            )
           ) : (
             <div className="h-52 w-full flex flex-col space-y-2 items-center justify-center">
               <HistoryIcon className="text-gray-700" />
@@ -171,20 +204,29 @@ export default function Home() {
 /* Shortcut Links */
 const ListActionsButton = () => {
   const actions = [
-    { name: "Buy Airtime", url: "buyairtime", Icon: Phone },
-    { name: "Buy Data", url: "#", Icon: Signal },
+    {
+      name: "Buy Airtime",
+      url: "buyairtime",
+      Icon: Phone,
+    },
+    { name: "Buy Data", url: "#", Icon: Signal, flag: "coming soon!" },
   ];
 
   return (
     <div className="mt-10 mb-10">
       <div className=" grid grid-cols-3 sm:grid-cols-5 md:grid-cols-4 lg:grid-cols-8 gap-2">
-        {actions.map(({ name, url, Icon }) => {
+        {actions.map(({ name, url, Icon, flag }) => {
           return (
             <Link
               key={name}
               to={url}
-              className="p-4 border hover:border-gray-100 flex flex-col items-center space-y-2 rounded-md group text-gray-800"
+              className="p-4 border hover:border-gray-100 flex flex-col relative items-center space-y-2 rounded-md group text-gray-800"
             >
+              {flag && (
+                <div className="text-xs absolute -top-2 -right-4 bg-red-500 text-white rounded-full p-1">
+                  {flag}
+                </div>
+              )}
               <span className="inline-block p-2  group-hover:bg-gray-200 rounded-md group-hover:text-gray-500 transition-all">
                 <Icon size={20} />
               </span>

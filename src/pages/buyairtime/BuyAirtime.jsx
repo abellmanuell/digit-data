@@ -9,7 +9,7 @@ import fetcher from "../../hooks/useFetch";
 import React, { useContext, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
-import { TokenContext } from "../../contexts/context";
+import { TokenContext, UserContext } from "../../contexts/context";
 import topUpServices from "../../services/topup.service";
 
 export default function BuyAirtime() {
@@ -19,6 +19,19 @@ export default function BuyAirtime() {
   const [networks, setNetworks] = useState([]);
   const [airtimeType, setAirtimeType] = useState([]);
   const { token, setToken } = useContext(TokenContext);
+  const { user, setUser } = useContext(UserContext);
+
+  /* TRIGGER ACTION TO PURCHASE AIRTIME */
+  async function buy(data, token) {
+    const request = await topUpServices.topUp(data, token);
+
+    if (request.status >= 200 && request.status <= 299) {
+      setUser(request.data);
+      toast.success(request.message);
+    } else {
+      toast.error(request.message);
+    }
+  }
 
   /* Get Networks */
   async function loadNetworkAndAirtimeType() {
@@ -157,7 +170,7 @@ export default function BuyAirtime() {
                 <>
                   <FormInput
                     type="number"
-                    placeholder="Enter amount Min. ₦50"
+                    placeholder="Enter amount Min. ₦100"
                     name={field.name}
                     value={field.state.value}
                     field={field}
@@ -187,15 +200,4 @@ export default function BuyAirtime() {
       />
     </div>
   );
-}
-
-async function buy(data, token) {
-  const request = await topUpServices.topUp(data, token);
-  console.log(request);
-
-  if (request.status >= 200 && request.status <= 299) {
-    toast.success(request.message);
-  } else {
-    toast.error(request.message);
-  }
 }

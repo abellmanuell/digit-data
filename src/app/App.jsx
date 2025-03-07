@@ -54,7 +54,7 @@ export default function App() {
       url: "#",
       icon: Inbox,
     },
-    {
+    /*  {
       title: "Buy Bulk SMS Data",
       url: "#",
       icon: Signal,
@@ -63,7 +63,7 @@ export default function App() {
       title: "Account",
       url: "#",
       icon: User,
-    },
+    }, */
     {
       title: "Settings",
       url: "#",
