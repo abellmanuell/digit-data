@@ -59,7 +59,11 @@ export default function Home() {
       <ClipLoader color="#000" loading={isLoading} size={100} />
     </div>
   ) : (
-    <div className="w-full">
+    <div className="w-full relative">
+      <div className="bg-orange-100 text-orange-500 p-2 absolute -top-16 w-full text-center text-sm">
+        <strong>Notice: </strong>
+        The ₦100 bonus will be deactivated once we have 5 users in our system.
+      </div>
       <Toaster position="top-left" reverseOrder={true} />
 
       {/* Welcome user */}
