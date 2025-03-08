@@ -172,9 +172,9 @@ export default function SignUp() {
             Already have an accountt?{" "}
             <Link
               className="text-gray-900 font-medium hover:text-gray-950"
-              to="/login"
+              to="/signin"
             >
-              Log in
+              Login
             </Link>
           </p>
 

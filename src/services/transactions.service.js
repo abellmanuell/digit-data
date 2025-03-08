@@ -16,6 +16,8 @@ async function getTransactions(data, token) {
         return await getTransactions(data, token);
       }
     } else {
+      localStorage.clear();
+      window.location.href = "/signin";
       throw new Error(request.message);
     }
   } catch (e) {

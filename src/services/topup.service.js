@@ -8,8 +8,12 @@ async function topUp(data, token) {
       return request;
     } else if (request.status === 401) {
       const token = await refreshToken();
-      return await topUp(data, token);
+      if (token.status >= 200 && token.status <= 299) {
+        return await topUp(data, token);
+      }
     } else {
+      localStorage.clear();
+      window.location.href = "/signin";
       throw new Error(request.message);
     }
   } catch (e) {

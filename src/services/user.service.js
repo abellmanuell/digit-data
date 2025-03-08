@@ -12,6 +12,8 @@ async function getUserData(token) {
         return await getUserData(token);
       }
     } else {
+      localStorage.clear();
+      window.location.href = "/signin";
       throw new Error(data.message);
     }
   } catch (e) {
@@ -31,6 +33,8 @@ async function updateUser(data, token) {
         return await updateUser(data, token);
       }
     } else {
+      localStorage.clear();
+      window.location.href = "/signin";
       throw new Error(request.message);
     }
   } catch (e) {
