@@ -4,7 +4,7 @@ async function get(url, token) {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: token ? `Bearer ${token}` : "",
+        Authorization: token ? `Bearer ${token}` : null,
       },
       credentials: "include",
     });
@@ -22,10 +22,10 @@ async function post(url, data = {}, token) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: token ? `Bearer ${token}` : "",
+        Authorization: token ? `Bearer ${token}` : null,
       },
       credentials: "include",
-      body: data ? JSON.stringify(data) : "",
+      body: data ? JSON.stringify(data) : null,
     });
 
     const responseData = await response.json();
@@ -41,10 +41,10 @@ async function put(url, data = {}, token) {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: token ? `Bearer ${token}` : "",
+        Authorization: token ? `Bearer ${token}` : null,
       },
       credentials: "include",
-      body: data ? JSON.stringify(data) : "",
+      body: data ? JSON.stringify(data) : null,
     });
 
     const responseData = await response.json();

@@ -8,7 +8,9 @@ async function getUserData(token) {
       return request;
     } else if (request.status === 401) {
       const token = await refreshToken();
-      return await getUserData(token);
+      if (token.status >= 200 && token.status <= 299) {
+        return await getUserData(token);
+      }
     } else {
       throw new Error(data.message);
     }
@@ -24,14 +26,11 @@ async function updateUser(data, token) {
       return request;
     } else if (request.status === 401) {
       const token = await refreshToken();
-      return await updateUser(data, token);
 
-      if (token.status !== 404) {
-      } else {
-        localStorage.clear();
+      if (token.status >= 200 && token.status <= 299) {
+        return await updateUser(data, token);
       }
     } else {
-      localStorage.clear();
       throw new Error(request.message);
     }
   } catch (e) {

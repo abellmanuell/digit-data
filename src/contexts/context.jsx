@@ -1,6 +1,6 @@
 import React, { createContext, useState } from "react";
 import userService from "../services/user.service";
-export const TokenContext = createContext(localStorage.getItem("token"));
+export const TokenContext = createContext(null);
 export const UserContext = createContext(null);
 export const IsLoadingContext = createContext(null);
 
@@ -12,10 +12,12 @@ export const TokenProvider = ({ children }) => {
   React.useEffect(() => {
     async function startFetching() {
       setUser(null);
-      const getUserData = await userService.getUserData(token);
-      if (!ignore) {
-        setUser(getUserData);
-        setIsLoading(false);
+      if (token) {
+        const getUserData = await userService.getUserData(token);
+        if (!ignore) {
+          setUser(getUserData);
+          setIsLoading(false);
+        }
       }
     }
 

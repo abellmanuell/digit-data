@@ -12,7 +12,9 @@ async function getTransactions(data, token) {
       return request;
     } else if (request.status === 401) {
       const token = await refreshToken();
-      return await getTransactions(data, token);
+      if (token.status >= 200 && token.status <= 299) {
+        return await getTransactions(data, token);
+      }
     } else {
       throw new Error(request.message);
     }

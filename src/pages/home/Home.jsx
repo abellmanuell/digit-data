@@ -49,7 +49,6 @@ export default function Home() {
     }
   }
 
-  console.log(transactions);
   React.useEffect(() => {
     loadTransactions();
     user && setIsLoading(true);
