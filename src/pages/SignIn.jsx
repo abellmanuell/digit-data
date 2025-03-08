@@ -2,7 +2,7 @@ import { useForm } from "@tanstack/react-form";
 import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 
-import agentUtilization from "../assets/agent-utilization.avif";
+import ssplatform from "../assets/ssplatform.png";
 import AccountInOutHeader from "@/components/AccountInOutHeader";
 import FormInput from "@/components/FormInput";
 import SubmitButton from "@/components/SubmitButton";
@@ -212,17 +212,18 @@ export default function SignIn() {
         <div className="hidden md:block bg-black p-10 overflow-hidden">
           <div className="space-y-2 mb-20 py-6 text-center">
             <h1 className="text-3xl font-bold text-white">
-              Make the change and see the change you want to see.
+              Stay Connected, <br /> Anytime,{" "}
+              <span className="text-[#EF4848]">Anywhere!</span>
             </h1>
             <p className="text-gray-500">
-              Get insights and actionable recommendations to optimize your CI
-              pipelines.
+              Easily buy data and airtime for easy browsing—fast, reliable, and
+              stress-free!
             </p>
           </div>
 
           <img
-            src={agentUtilization}
-            alt="Agent Utilization"
+            src={ssplatform}
+            alt="SS Platform"
             className="rounded-lg ring-8 ring-gray-500"
           />
         </div>
