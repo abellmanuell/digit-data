@@ -61,7 +61,6 @@ export default function SignUp() {
           form.reset();
 
           setToken("token", request.token);
-          setToken("refresh_token", request.refresh_token);
         } else {
           toast.error(request.message);
         }

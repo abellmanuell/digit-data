@@ -1,5 +1,4 @@
 import fetcher from "../hooks/useFetch";
-import refreshToken from "../utils/refreshTokenRequest";
 
 async function topUp(data, token) {
   try {
@@ -7,17 +6,13 @@ async function topUp(data, token) {
     if (request.status >= 200 && request.status <= 299) {
       return request;
     } else if (request.status === 401) {
-      const token = await refreshToken();
-      if (token.status >= 200 && token.status <= 299) {
-        return await topUp(data, token);
-      }
-    } else {
       localStorage.clear();
-      window.location.href = "/signin";
-      throw new Error(request.message);
+      return request;
+    } else {
+      return request;
     }
   } catch (e) {
-    return e;
+    console.error(e);
   }
 }
 

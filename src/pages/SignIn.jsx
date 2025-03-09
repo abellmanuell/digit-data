@@ -62,7 +62,6 @@ export default function SignIn() {
             form.reset();
 
             setToken("token", data.token);
-            setToken("refresh_token", data.refresh_token);
             navigate("/dashboard");
           } else {
             toast.error(data.message);
