@@ -11,6 +11,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
 import { TokenContext, UserContext } from "../../contexts/context";
 import topUpServices from "../../services/topup.service";
+import Wrapper from "@/components/Wrapper";
 
 export default function BuyAirtime() {
   const [isLoading, setIsLoading] = useState(false);
@@ -39,15 +40,17 @@ export default function BuyAirtime() {
       const networks = await fetcher.get("/api/networks");
       const airtimeType = await fetcher.get("/api/airtime-type");
 
-      if (networks.status >= 200 && networks.status < 299) {
+      if (
+        (networks.status && airtimeType.status) >= 200 &&
+        (airtimeType.status && networks.status) < 299
+      ) {
         setNetworks(networks.data);
-        if (airtimeType.status >= 200 && airtimeType.status < 299) {
-          setAirtimeType(airtimeType.data);
-          setIsLoading(true);
-        }
-      } else {
-        toast.error("Unexpected error occurred!");
+        setAirtimeType(airtimeType.data);
+        setIsLoading(true);
+        return;
       }
+
+      toast.error("Unexpected error occurred!");
     } catch {
       throw new Error();
     }
@@ -88,10 +91,10 @@ export default function BuyAirtime() {
 
   return !isLoading ? (
     <div className="flex justify-center items-center h-screen">
-      <ClipLoader color="#000" loading={isLoading} size={100} />
+      <ClipLoader color="#000" size={100} />
     </div>
   ) : (
-    <div className="w-full md:w-[500px]">
+    <Wrapper>
       <Toaster position="top-left" reverseOrder={true} />
       <Heading className="my-10">Buy Airtime</Heading>
       <form
@@ -198,6 +201,6 @@ export default function BuyAirtime() {
           buy({ ...buyAirtime, network: _id }, token);
         }}
       />
-    </div>
+    </Wrapper>
   );
 }

@@ -15,9 +15,11 @@ import LandingPage from "./pages/spa/LandingPage.jsx";
 import SignIn from "./pages/SignIn.jsx";
 import { TokenProvider } from "./contexts/context.jsx";
 import ProtectedRoute from "./components/protectedRoute/ProtectedRoute.jsx";
-import EditUser from "./pages/edit-user/EditUser.jsx";
-import BuyAirtime from "./pages/buyairtime/BuyAirtime.jsx";
-import Home from "./pages/home/Home.jsx";
+import EditUser from "./app/edit-user/EditUser.jsx";
+import BuyAirtime from "./app/buyairtime/BuyAirtime.jsx";
+import Home from "./app/home/Home.jsx";
+import AllTransactions from "./app/transactions/AllTransactions.jsx";
+import AirtimeTransactions from "./app/transactions/AirtimeTransactions.jsx";
 
 // Document Title
 document.title = "Digit Data";
@@ -40,6 +42,11 @@ const router = createBrowserRouter(
           <Route path="edit" element={<EditUser />} />
           <Route index element={<Home />} />
           <Route path="buyairtime" element={<BuyAirtime />} />
+          <Route path="transactions/:id" element={<AllTransactions />} />
+          <Route
+            path="airtime_transactions/:id"
+            element={<AirtimeTransactions />}
+          />
         </Route>
       </Route>
     </Route>

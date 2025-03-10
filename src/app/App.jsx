@@ -73,7 +73,7 @@ export default function App() {
 
   return isLoading ? (
     <div className="flex justify-center items-center h-screen">
-      <ClipLoader color="#000" loading={isLoading} size={100} />
+      <ClipLoader color="#000" size={100} />
     </div>
   ) : (
     <main className="flex">
@@ -152,7 +152,7 @@ export default function App() {
         </SidebarProvider>
       </section>
 
-      <section className="p-6 w-full">
+      <section className="w-full">
         <Outlet />
       </section>
     </main>

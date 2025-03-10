@@ -54,6 +54,10 @@ async function put(url, data = {}, token) {
   }
 }
 
-const fetcher = { get, post, put };
+function logout() {
+  localStorage.clear();
+  window.location.href = "/signin";
+}
+const fetcher = { get, post, put, logout };
 
 export default fetcher;

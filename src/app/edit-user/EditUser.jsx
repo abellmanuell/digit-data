@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Heading from "@/components/Heading";
 import { useForm } from "@tanstack/react-form";
 import FormInput from "@/components/FormInput";
@@ -6,10 +6,20 @@ import SubmitButton from "@/components/SubmitButton";
 import { TokenContext, UserContext } from "../../contexts/context";
 import toast, { Toaster } from "react-hot-toast";
 import userServices from "../../services/user.service";
+import Wrapper from "@/components/Wrapper";
+import { ClipLoader } from "react-spinners";
 
 export default function EditUser() {
   const { user, setUser } = useContext(UserContext);
   const { token, setToken } = useContext(TokenContext);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      setIsLoading(true);
+    }
+  }, []);
+
   const form = useForm({
     defaultValues: {
       email: user?.email ?? "",
@@ -28,8 +38,12 @@ export default function EditUser() {
     },
   });
 
-  return (
-    <div className="w-full md:w-[500px]">
+  return !isLoading ? (
+    <div className="flex justify-center items-center h-screen">
+      <ClipLoader color="#000" size={100} />
+    </div>
+  ) : (
+    <Wrapper>
       <Toaster toast={toast} />
       <Heading className="my-10">Edit Profile</Heading>
       <div>
@@ -121,6 +135,6 @@ export default function EditUser() {
           <SubmitButton formSubscribe={form} value="Update" />{" "}
         </form>
       </div>
-    </div>
+    </Wrapper>
   );
 }

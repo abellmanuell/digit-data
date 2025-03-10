@@ -10,8 +10,7 @@ async function getTransactions(data, token) {
     if (request.status >= 200 && request.status <= 299) {
       return request;
     } else if (request.status === 401) {
-      localStorage.clear();
-      return request;
+      fetcher.logout();
     } else {
       return request;
     }
