@@ -51,6 +51,7 @@ const router = createBrowserRouter(
             path="airtime_transactions/:id"
             element={<AirtimeTransactions />}
           />
+          <Route path="#d" element={<h1 className="bg-red-500">Side Bar</h1>} />
         </Route>
       </Route>
     </Route>

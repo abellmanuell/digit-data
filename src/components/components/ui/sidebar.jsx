@@ -481,7 +481,7 @@ const SidebarMenuButton = React.forwardRef(
     ref
   ) => {
     const Comp = asChild ? Slot : "button";
-    const { isMobile, state } = useSidebar();
+    const { isMobile, state, toggleSidebar } = useSidebar();
 
     const button = (
       <Comp
@@ -491,6 +491,9 @@ const SidebarMenuButton = React.forwardRef(
         data-active={isActive}
         className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
         {...props}
+        onClick={() => {
+          toggleSidebar();
+        }}
       />
     );
 

@@ -14,6 +14,7 @@ import {
   SidebarMenuItem,
   SidebarProvider,
   SidebarTrigger,
+  useSidebar,
 } from "@/components/components/ui/sidebar";
 import {
   Home,
@@ -24,7 +25,7 @@ import {
   SquarePen,
   User,
 } from "lucide-react";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 
 export default function App() {
@@ -78,7 +79,7 @@ export default function App() {
   ) : (
     <main className="flex">
       <section>
-        <SidebarProvider>
+        <SidebarProvider open={true} onOpenChange={() => console.log(444)}>
           <Sidebar>
             <SidebarHeader>
               <SidebarMenu>
@@ -121,10 +122,10 @@ export default function App() {
                   {items.map((item) => (
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton asChild>
-                        <Link to={item.url}>
+                        <NavLink to={item.url}>
                           <item.icon />
                           <span>{item.title}</span>
-                        </Link>
+                        </NavLink>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   ))}
