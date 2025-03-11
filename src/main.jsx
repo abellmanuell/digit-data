@@ -21,6 +21,7 @@ import Home from "./app/home/Home.jsx";
 import AllTransactions from "./app/transactions/AllTransactions.jsx";
 import AirtimeTransactions from "./app/transactions/AirtimeTransactions.jsx";
 import PaymentMessage from "./app/payments/PaymentMessage.jsx";
+import Settings from "./app/settings/Settings.jsx";
 
 // Document Title
 document.title = "Digit Data";
@@ -40,11 +41,12 @@ const router = createBrowserRouter(
         }
       >
         <Route path="/dashboard" element={<App />}>
-          <Route path="edit" element={<EditUser />} />
           <Route index element={<Home />} />
           <Route path="buyairtime" element={<BuyAirtime />} />
           <Route path="transactions/:id" element={<AllTransactions />} />
           <Route path="success" element={<PaymentMessage />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="settings/edit" element={<EditUser />} />
           <Route
             path="airtime_transactions/:id"
             element={<AirtimeTransactions />}

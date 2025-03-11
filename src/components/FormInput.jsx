@@ -23,7 +23,13 @@ function FormInput({
           value={field.state.value}
           onBlur={field.handleBlur}
           placeholder={placeholder}
-          onChange={(e) => field.handleChange(e.target.value)}
+          onChange={(e) =>
+            field.handleChange(
+              type !== "password"
+                ? e.target?.value.toLowerCase()
+                : e.target?.value
+            )
+          }
           className={cn(
             "w-full border p-4 rounded-md text-sm peer",
             label && "placeholder:text-transparent",

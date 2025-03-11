@@ -66,7 +66,7 @@ export default function App() {
     }, */
     {
       title: "Settings",
-      url: "#",
+      url: "settings",
       icon: Settings,
     },
   ];
@@ -103,7 +103,7 @@ export default function App() {
                     </div>
                     <div>
                       <Link
-                        to="edit"
+                        to="settings/edit"
                         className="hover:bg-sidebar-foreground/5 rounded-sm block p-2"
                       >
                         <SquarePen size="20" />
