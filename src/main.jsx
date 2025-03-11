@@ -20,6 +20,7 @@ import BuyAirtime from "./app/buyairtime/BuyAirtime.jsx";
 import Home from "./app/home/Home.jsx";
 import AllTransactions from "./app/transactions/AllTransactions.jsx";
 import AirtimeTransactions from "./app/transactions/AirtimeTransactions.jsx";
+import PaymentMessage from "./app/payments/PaymentMessage.jsx";
 
 // Document Title
 document.title = "Digit Data";
@@ -43,6 +44,7 @@ const router = createBrowserRouter(
           <Route index element={<Home />} />
           <Route path="buyairtime" element={<BuyAirtime />} />
           <Route path="transactions/:id" element={<AllTransactions />} />
+          <Route path="success" element={<PaymentMessage />} />
           <Route
             path="airtime_transactions/:id"
             element={<AirtimeTransactions />}

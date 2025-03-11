@@ -168,7 +168,7 @@ export default function SignUp() {
           </form>
 
           <p className="text-sm text-gray-600">
-            Already have an accountt?{" "}
+            Already have an account?{" "}
             <Link
               className="text-gray-900 font-medium hover:text-gray-950"
               to="/signin"

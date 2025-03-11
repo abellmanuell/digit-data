@@ -116,7 +116,7 @@ export default function EditUser() {
             </div>
             <div>
               <form.Field
-                name="phone_number"
+                name="mobile_number"
                 children={(field) => {
                   return (
                     <>

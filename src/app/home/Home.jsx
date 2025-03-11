@@ -25,6 +25,7 @@ import {
 } from "@/components/components/ui/table";
 import transactionsServices from "../../services/transactions.service";
 import Wrapper from "@/components/Wrapper";
+import AddFundDialog from "@/components/FundAccountDialog";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
@@ -60,10 +61,10 @@ export default function Home() {
     </div>
   ) : (
     <>
-      <div className="bg-orange-100 text-orange-500 p-2 w-full text-center text-sm">
+      {/* <div className="bg-orange-100 text-orange-500 p-2 w-full text-center text-sm">
         <strong>Notice: </strong>
         The ₦100 bonus will be deactivated once we have 5 users in our system.
-      </div>
+      </div> */}
       <Wrapper>
         <Toaster position="top-left" reverseOrder={true} />
 
@@ -88,10 +89,7 @@ export default function Home() {
               <h3 className="font-bold">Wallet Balance</h3>
               <div className="my-2">
                 <h1 className="text-2xl font-bold">
-                  {new Intl.NumberFormat("en-US", {
-                    style: "currency",
-                    currency: "NGN",
-                  }).format(user.wallet_balance)}
+                  ₦{new Intl.NumberFormat("en-US").format(user.wallet_balance)}
                 </h1>
                 <p className="text-sm text-gray-500">Nigerian Currency</p>
               </div>
@@ -99,12 +97,7 @@ export default function Home() {
           </div>
 
           <div>
-            <Link
-              to="fund_wallet"
-              className="bg-black text-white rounded-md font-bold px-4 py-2 text-sm"
-            >
-              Add Fund
-            </Link>
+            <AddFundDialog />
           </div>
         </div>
 

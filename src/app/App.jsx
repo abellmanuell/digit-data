@@ -97,11 +97,8 @@ export default function App() {
                         </p>
                       </div>
                       <p className="text-sm">
-                        <span className="text-gray-500">Balance </span>
-                        {new Intl.NumberFormat("en-US", {
-                          style: "currency",
-                          currency: "NGN",
-                        }).format(user.wallet_balance)}
+                        <span className="text-gray-500">Balance: </span>
+                        {"₦" + user.wallet_balance}
                       </p>
                     </div>
                     <div>
