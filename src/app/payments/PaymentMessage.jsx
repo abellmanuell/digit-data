@@ -11,8 +11,10 @@ export default function PaymentMessage() {
 
   return (
     <Wrapper className="flex justify-center items-center flex-col p-20">
-      {status !== "cancelled" || status !== "failed" ? (
+      {status !== "cancelled" ? (
         <CircleCheck size="50px" className="text-green-500" />
+      ) : status !== "failed" ? (
+        <CircleX size="50px" className="text-red-500" />
       ) : (
         <CircleX size="50px" className="text-red-500" />
       )}
