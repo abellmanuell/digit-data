@@ -32,14 +32,16 @@ export default function PaymentMessage() {
           </Paragraphing>
         ) : (
           <Paragraphing className="text-center">
-            Your payment has been {status !== "failed" ? "canceled" : "failed"}.{" "}
+            Your payment has been {status !== "failed" ? "canceled" : "failed"}.
             <br /> No worries, you can try again anytime! 😊
           </Paragraphing>
         )}
       </div>
       <LinkTo className="text-sm underline" to="/dashboard">
-        {status !== "cancelled" || status !== "failed"
+        {status !== "cancelled"
           ? "Go Dashboard"
+          : status !== "failed"
+          ? "Try once again"
           : "Try again"}
       </LinkTo>
     </Wrapper>
