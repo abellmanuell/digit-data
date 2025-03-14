@@ -492,7 +492,7 @@ const SidebarMenuButton = React.forwardRef(
         className={cn(sidebarMenuButtonVariants({ variant, size }), className)}
         {...props}
         onClick={() => {
-          toggleSidebar();
+          isMobile && toggleSidebar();
         }}
       />
     );

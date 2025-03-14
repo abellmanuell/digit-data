@@ -43,7 +43,9 @@ async function oauth() {
 
 export default function SignUp() {
   if (getToken("token")) {
-    navigate("/dashboard");
+    setTimeout(() => {
+      navigate("/dashboard");
+    }, 3000);
   }
 
   const [isPasswordShow, setIsPasswordShow] = useState(false);
