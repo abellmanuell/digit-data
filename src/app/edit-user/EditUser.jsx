@@ -25,7 +25,7 @@ export default function EditUser() {
       email: user?.email ?? "",
       given_name: user?.given_name ?? "",
       family_name: user?.family_name ?? "",
-      phone_number: user?.phone_number ?? "",
+      mobile_number: user?.mobile_number ?? "",
     },
     onSubmit: async ({ value }) => {
       const request = await userServices.updateUser(value, token);
