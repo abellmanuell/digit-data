@@ -49,7 +49,6 @@ export default function SignIn() {
 
   if (getToken("token")) {
     navigate("/dashboard");
-    return;
   }
 
   if (status >= 200 && status <= 299 && token) {
@@ -57,7 +56,6 @@ export default function SignIn() {
 
     setToken("token", token);
     navigate("/dashboard");
-    return;
   } else {
     toast.error(message);
   }
