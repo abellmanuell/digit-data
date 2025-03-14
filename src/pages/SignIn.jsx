@@ -50,7 +50,9 @@ export default function SignIn() {
   const navigate = useNavigate();
 
   if (getToken("token")) {
-    navigate("/dashboard");
+    setTimeout(() => {
+      navigate("/dashboard");
+    }, 3000);
   }
 
   if (status >= 200 && status <= 299) {
