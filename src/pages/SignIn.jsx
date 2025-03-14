@@ -18,28 +18,12 @@ function setToken(name, token) {
   localStorage.setItem(name, token);
 }
 
-function getToken(token) {
-  return localStorage.getItem(token);
+function navigate(url) {
+  window.location.href = url;
 }
 
-/* function navigate(url) {
-  window.location.href = url;
-} */
-
-async function oauth() {
-  try {
-    const response = await fetch(
-      import.meta.env.VITE_BASE_URL + "/google-oauth-request",
-      {
-        method: "POST",
-      }
-    );
-
-    const { url } = await response.json();
-    navigate(url);
-  } catch {
-    throw new Error("No Auth url");
-  }
+function getToken(token) {
+  return localStorage.getItem(token);
 }
 
 export default function SignIn() {
@@ -47,7 +31,6 @@ export default function SignIn() {
   const status = Number(searchParams.get("status"));
   const token = searchParams.get("token");
   const message = searchParams.get("message");
-  const navigate = useNavigate();
 
   if (getToken("token")) {
     setTimeout(() => {
@@ -59,6 +42,23 @@ export default function SignIn() {
     toast.success(message);
     setToken("token", token);
     navigate("/dashboard");
+  }
+
+  // Continue to Google
+  async function oauth() {
+    try {
+      const response = await fetch(
+        import.meta.env.VITE_BASE_URL + "/google-oauth-request",
+        {
+          method: "POST",
+        }
+      );
+
+      const { url } = await response.json();
+      navigate(url);
+    } catch {
+      throw new Error("No Auth url");
+    }
   }
 
   const [isPasswordShow, setIsPasswordShow] = useState(false);
