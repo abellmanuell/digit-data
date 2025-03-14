@@ -12,6 +12,7 @@ import fetcher from "../hooks/useFetch";
 import toast, { Toaster } from "react-hot-toast";
 import AuthButton from "@/components/AuthButton";
 import FieldInfo from "@/components/FieldInfo";
+import Paragraphing from "@/components/Paragraphing";
 
 function setToken(name, token) {
   localStorage.setItem(name, token);
@@ -20,6 +21,10 @@ function setToken(name, token) {
 function getToken(token) {
   return localStorage.getItem(token);
 }
+
+/* function navigate(url) {
+  window.location.href = url;
+} */
 
 async function oauth() {
   try {
@@ -44,21 +49,14 @@ export default function SignIn() {
   const message = searchParams.get("message");
   const navigate = useNavigate();
 
-  function navigate(url) {
-    navigate(url);
-  }
-
   if (getToken("token")) {
     navigate("/dashboard");
   }
 
-  if (status >= 200 && status <= 299 && token) {
+  if (status >= 200 && status <= 299) {
     toast.success(message);
-
     setToken("token", token);
     navigate("/dashboard");
-  } else {
-    toast.error(message);
   }
 
   const [isPasswordShow, setIsPasswordShow] = useState(false);
@@ -218,6 +216,10 @@ export default function SignIn() {
             icon={FcGoogle}
             handleOauth={() => oauth()}
           />
+
+          <Paragraphing className="text-pink-500 text-sm">
+            {status === 403 && message}
+          </Paragraphing>
         </div>
 
         {/*****************************
