@@ -73,6 +73,7 @@ export default function EditUser() {
                         value={field.state.value}
                         label="First name"
                         field={field}
+                        disabled={user?.google_id ? true : false}
                       />
                     </>
                   );
@@ -90,6 +91,7 @@ export default function EditUser() {
                         name={field.name}
                         label="Last name"
                         field={field}
+                        disabled={user?.google_id ? true : false}
                       />
                     </>
                   );
