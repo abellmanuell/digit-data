@@ -43,13 +43,9 @@ async function oauth() {
 
 export default function SignIn() {
   const [searchParams] = useSearchParams();
-  const status = searchParams.get("status");
+  const status = Number(searchParams.get("status"));
   const token = searchParams.get("token");
   const message = searchParams.get("message");
-
-  if (getToken("token")) {
-    navigate("/dashboard");
-  }
 
   if (status >= 200 && status <= 299 && token) {
     toast.success(message);
@@ -58,8 +54,13 @@ export default function SignIn() {
     navigate("/dashboard");
   } else {
     toast.error(message);
+    return;
   }
 
+  if (getToken("token")) {
+    navigate("/dashboard");
+    return;
+  }
   const [isPasswordShow, setIsPasswordShow] = useState(false);
 
   const form = useForm({
