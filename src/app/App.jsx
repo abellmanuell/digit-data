@@ -79,7 +79,7 @@ export default function App() {
   ) : (
     <main className="flex">
       <section>
-        <SidebarProvider open={true} onOpenChange={() => console.log(444)}>
+        <SidebarProvider>
           <Sidebar>
             <SidebarHeader>
               <SidebarMenu>
@@ -136,12 +136,12 @@ export default function App() {
             <SidebarFooter>
               <SidebarMenu>
                 <SidebarMenuItem>
-                  <SidebarMenuButton
-                    className="text-red-500 hover:bg-red-500/5 hover:text-red-500"
+                  <button
+                    className="text-red-500 hover:bg-red-500/5 hover:text-red-500 w-full px-2 py-1 rounded text-left"
                     onClick={logout}
                   >
                     Logout
-                  </SidebarMenuButton>
+                  </button>
                 </SidebarMenuItem>
               </SidebarMenu>
             </SidebarFooter>

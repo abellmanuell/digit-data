@@ -1,5 +1,5 @@
 import { useForm } from "@tanstack/react-form";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 
 import ssplatform from "../assets/ssplatform.png";
@@ -42,8 +42,24 @@ async function oauth() {
 }
 
 export default function SignIn() {
+  const [searchParams] = useSearchParams();
+  const status = searchParams.get("status");
+  const token = searchParams.get("token");
+  const message = searchParams.get("message");
+
   if (getToken("token")) {
     navigate("/dashboard");
+    return;
+  }
+
+  if (status >= 200 && status <= 299 && token) {
+    toast.success(message);
+
+    setToken("token", token);
+    navigate("/dashboard");
+    return;
+  } else {
+    toast.error(message);
   }
 
   const [isPasswordShow, setIsPasswordShow] = useState(false);
