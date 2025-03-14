@@ -27,6 +27,7 @@ function getToken(token) {
 }
 
 export default function SignIn() {
+  const [isLoading, setIsLoading] = useState(false);
   const [searchParams] = useSearchParams();
   const status = Number(searchParams.get("status"));
   const token = searchParams.get("token");
@@ -47,6 +48,8 @@ export default function SignIn() {
   // Continue to Google
   async function oauth() {
     try {
+      setIsLoading(true);
+
       const response = await fetch(
         import.meta.env.VITE_BASE_URL + "/google-oauth-request",
         {
@@ -54,8 +57,12 @@ export default function SignIn() {
         }
       );
 
-      const { url } = await response.json();
-      navigate(url);
+      if (response.status >= 200 && response.status <= 299) {
+        const { url } = await response.json();
+        navigate(url);
+      } else {
+        setIsLoading(false);
+      }
     } catch {
       throw new Error("No Auth url");
     }
@@ -217,6 +224,7 @@ export default function SignIn() {
             value="Continue with Google"
             icon={FcGoogle}
             handleOauth={() => oauth()}
+            isLoading={isLoading}
           />
 
           <Paragraphing className="text-pink-500 text-sm">
