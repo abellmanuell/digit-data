@@ -7,14 +7,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/components/ui/select";
+import { cn } from "../utils/cn";
 
-export default function FormSelect({ placeholder, items, children, field }) {
+export default function FormSelect({
+  placeholder,
+  items,
+  children,
+  field,
+  className,
+}) {
   return (
-    <div className="my-8">
+    <div className={cn("my-8", className)}>
       <Select
         name={field.name}
-        onValueChange={field.handleChange}
+        onValueChange={(console.log(4), field.handleChange)}
         value={field.state.value}
+        defaultValue="MTN"
       >
         <SelectTrigger>
           <SelectValue placeholder={placeholder} />

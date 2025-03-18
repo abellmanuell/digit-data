@@ -52,7 +52,7 @@ export default function App() {
     },
     {
       title: "Buy Data",
-      url: "#",
+      url: "buydata",
       icon: Inbox,
     },
     /*  {

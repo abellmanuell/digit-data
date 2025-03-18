@@ -218,7 +218,7 @@ const ListActionsButton = () => {
       url: "buyairtime",
       Icon: Phone,
     },
-    { name: "Buy Data", url: "#", Icon: Signal, flag: "coming soon!" },
+    { name: "Buy Data", url: "buydata", Icon: Signal },
   ];
 
   return (

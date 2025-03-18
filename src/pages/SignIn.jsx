@@ -33,9 +33,7 @@ export default function SignIn() {
   const message = searchParams.get("message");
 
   if (getToken("token")) {
-    setTimeout(() => {
-      navigate("/dashboard");
-    }, 3000);
+    navigate("/dashboard");
   }
 
   if (status >= 200 && status <= 299) {

@@ -22,6 +22,7 @@ import AllTransactions from "./app/transactions/AllTransactions.jsx";
 import AirtimeTransactions from "./app/transactions/AirtimeTransactions.jsx";
 import PaymentMessage from "./app/payments/PaymentMessage.jsx";
 import Settings from "./app/settings/Settings.jsx";
+import BuyData from "./app/buydata/BuyData.jsx";
 
 // Document Title
 document.title = "Digit Data";
@@ -43,6 +44,7 @@ const router = createBrowserRouter(
         <Route path="/dashboard" element={<App />}>
           <Route index element={<Home />} />
           <Route path="buyairtime" element={<BuyAirtime />} />
+          <Route path="buydata" element={<BuyData />} />
           <Route path="transactions/:id" element={<AllTransactions />} />
           <Route path="success" element={<PaymentMessage />} />
           <Route path="settings" element={<Settings />} />

@@ -12,11 +12,12 @@ function FormInput({
   children,
   className,
   placeholder,
+  divClassName,
   ...props
 }) {
   return (
     <>
-      <div className="relative my-8">
+      <div className={cn("relative my-8", divClassName)}>
         <Input
           type={type}
           name={name}
