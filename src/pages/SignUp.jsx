@@ -25,25 +25,28 @@ function navigate(url) {
   window.location.href = url;
 }
 
-async function oauth() {
-  try {
-    const response = await fetch(
-      import.meta.env.VITE_BASE_URL + "/google-oauth-request",
-      {
-        method: "POST",
-      }
-    );
-
-    const { url } = await response.json();
-    navigate(url);
-  } catch {
-    throw new Error("No Auth url");
-  }
-}
-
 export default function SignUp() {
+  const [isGoogleAuthLoading, setIsGoogleAuthLoading] = useState(false);
+
   if (getToken("token")) {
     navigate("/dashboard");
+  }
+
+  async function oauth() {
+    try {
+      setIsGoogleAuthLoading(true);
+      const response = await fetch(
+        import.meta.env.VITE_BASE_URL + "/google-oauth-request",
+        {
+          method: "POST",
+        }
+      );
+
+      const { url } = await response.json();
+      navigate(url);
+    } catch {
+      throw new Error("No Auth url");
+    }
   }
 
   const [isPasswordShow, setIsPasswordShow] = useState(false);
@@ -188,7 +191,7 @@ export default function SignUp() {
           </div>
 
           <AuthButton
-            value="Continue with Google"
+            value={isGoogleAuthLoading ? "Loading..." : "Continue with Google"}
             icon={FcGoogle}
             handleOauth={() => oauth()}
           />

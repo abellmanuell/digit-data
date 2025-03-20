@@ -8,11 +8,14 @@ import toast, { Toaster } from "react-hot-toast";
 import userServices from "../../services/user.service";
 import Wrapper from "@/components/Wrapper";
 import { ClipLoader } from "react-spinners";
+import ButtonWithState from "@/components/ButtonWithState";
+import Paragraphing from "@/components/Paragraphing";
 
 export default function EditUser() {
   const { user, setUser } = useContext(UserContext);
   const { token, setToken } = useContext(TokenContext);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -28,12 +31,15 @@ export default function EditUser() {
       mobile_number: user?.mobile_number ?? "",
     },
     onSubmit: async ({ value }) => {
+      setIsSubmitting(true);
       const request = await userServices.updateUser(value, token);
       if (request.status >= 200 && request.status <= 299) {
         setUser(request.data);
         toast.success(request.message);
+        setIsSubmitting(false);
       } else {
         toast.error(request.message);
+        setIsSubmitting(false);
       }
     },
   });
@@ -45,7 +51,13 @@ export default function EditUser() {
   ) : (
     <Wrapper>
       <Toaster toast={toast} />
-      <Heading className="my-10">Edit Profile</Heading>
+      <div className="my-16">
+        <Heading className="mb-1">Edit your profile</Heading>
+        <Paragraphing>
+          Update your details and personalize your experience.
+        </Paragraphing>
+      </div>
+
       <div>
         <form
           onSubmit={(e) => {
@@ -134,7 +146,7 @@ export default function EditUser() {
               />
             </div>
           </section>
-          <SubmitButton formSubscribe={form} value="Update" />{" "}
+          <ButtonWithState isSubmitting={isSubmitting} value="Update" />
         </form>
       </div>
     </Wrapper>

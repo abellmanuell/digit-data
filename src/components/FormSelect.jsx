@@ -20,7 +20,7 @@ export default function FormSelect({
     <div className={cn("my-8", className)}>
       <Select
         name={field.name}
-        onValueChange={(console.log(4), field.handleChange)}
+        onValueChange={field.handleChange}
         value={field.state.value}
         defaultValue="MTN"
       >

@@ -111,7 +111,12 @@ export default function BuyData() {
   ) : (
     <Wrapper>
       <Toaster position="top-left" reverseOrder={true} />
-      <Heading className="my-10">Mobile Data</Heading>
+      <div className="my-10">
+        <Heading className="mb-1">Buy Mobile Data Instantly</Heading>
+        <Paragraphing>
+          Stay connected with fast and easy data top-ups.
+        </Paragraphing>
+      </div>
       <form
         className="mb-10"
         onSubmit={(e) => {

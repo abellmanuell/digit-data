@@ -31,6 +31,7 @@ export default function SignIn() {
   const status = Number(searchParams.get("status"));
   const token = searchParams.get("token");
   const message = searchParams.get("message");
+  const [isGoogleAuthLoading, setIsGoogleAuthLoading] = useState(false);
 
   if (getToken("token")) {
     navigate("/dashboard");
@@ -45,6 +46,7 @@ export default function SignIn() {
   // Continue to Google
   async function oauth() {
     try {
+      setIsGoogleAuthLoading(true);
       const response = await fetch(
         import.meta.env.VITE_BASE_URL + "/google-oauth-request",
         {
@@ -212,7 +214,7 @@ export default function SignIn() {
           </div>
 
           <AuthButton
-            value="Continue with Google"
+            value={isGoogleAuthLoading ? "Loading..." : "Continue with Google"}
             icon={FcGoogle}
             handleOauth={() => oauth()}
           />

@@ -3,7 +3,6 @@ import FieldInfo from "@/components/FieldInfo";
 import FormInput from "@/components/FormInput";
 import FormSelect from "@/components/FormSelect";
 import Heading from "@/components/Heading";
-import SubmitButton from "@/components/SubmitButton";
 import { useForm } from "@tanstack/react-form";
 import fetcher from "../../hooks/useFetch";
 import React, { useContext, useState } from "react";
@@ -12,6 +11,8 @@ import { ClipLoader } from "react-spinners";
 import { TokenContext, UserContext } from "../../contexts/context";
 import topUpServices from "../../services/topup.service";
 import Wrapper from "@/components/Wrapper";
+import ButtonWithState from "@/components/ButtonWithState";
+import Paragraphing from "@/components/Paragraphing";
 
 export default function BuyAirtime() {
   const [isLoading, setIsLoading] = useState(false);
@@ -21,18 +22,7 @@ export default function BuyAirtime() {
   const [airtimeType, setAirtimeType] = useState([]);
   const { token, setToken } = useContext(TokenContext);
   const { user, setUser } = useContext(UserContext);
-
-  /* TRIGGER ACTION TO PURCHASE AIRTIME */
-  async function buy(data, token) {
-    const request = await topUpServices.topUp(data, token);
-
-    if (request.status >= 200 && request.status <= 299) {
-      setUser(request.data);
-      toast.success(request.message);
-    } else {
-      toast.error(request.message);
-    }
-  }
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   /* Get Networks */
   async function loadNetworkAndAirtimeType() {
@@ -89,6 +79,22 @@ export default function BuyAirtime() {
     },
   });
 
+  /* TRIGGER ACTION TO PURCHASE AIRTIME */
+  async function buy(data, token) {
+    setIsSubmitting(true);
+    const request = await topUpServices.topUp(data, token);
+
+    if (request.status >= 200 && request.status <= 299) {
+      form.reset();
+      setUser(request.data);
+      toast.success(request.message);
+      setIsSubmitting(false);
+    } else {
+      setIsSubmitting(false);
+      toast.error(request.message);
+    }
+  }
+
   return !isLoading ? (
     <div className="flex justify-center items-center h-screen">
       <ClipLoader color="#000" size={100} />
@@ -96,7 +102,12 @@ export default function BuyAirtime() {
   ) : (
     <Wrapper>
       <Toaster position="top-left" reverseOrder={true} />
-      <Heading className="my-10">Buy Airtime</Heading>
+      <div className="my-10">
+        <Heading className="mb-1">Buy Airtime Instantly</Heading>
+        <Paragraphing>
+          Top up your phone in seconds—anytime, anywhere.
+        </Paragraphing>
+      </div>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -185,7 +196,7 @@ export default function BuyAirtime() {
             }}
           />
         </div>
-        <SubmitButton formSubscribe={form} value="Buy Airtime" />{" "}
+        <ButtonWithState isSubmitting={isSubmitting} value="Buy Airtime" />
       </form>
 
       <AlertDialog
@@ -194,7 +205,6 @@ export default function BuyAirtime() {
         onCancel={() => setIsOpen(false)}
         onSubmit={() => {
           setIsOpen(false);
-          form.reset();
           const { _id } = networks.find(
             (network) => network.name === buyAirtime.network
           );
