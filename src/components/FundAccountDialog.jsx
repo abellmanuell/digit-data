@@ -16,12 +16,14 @@ import { useContext, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import fundWalletServices from "../services/fund-wallet";
 import { TokenContext, UserContext } from "../contexts/context";
+import Paragraphing from "./Paragraphing";
 
 export default function AddFundDialog() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [amount, setAmount] = useState("");
   const { token, setToken } = useContext(TokenContext);
   const { user, setUser } = useContext(UserContext);
+  const [transactionFee, setTransactionFee] = useState(40);
 
   /* Make a request for payment callback */
   async function handleAccountFund() {
@@ -37,7 +39,11 @@ export default function AddFundDialog() {
       }
 
       const paymentCallback = await fundWalletServices.fundWallet(
-        { amount: amount.slice(1).split(",").join(""), ...user },
+        {
+          amount: amount.slice(1).split(",").join(""),
+          transactionFee,
+          ...user,
+        },
         token
       );
 
@@ -71,7 +77,7 @@ export default function AddFundDialog() {
             Easily add funds and keep your wallet ready for anything! 🚀💰
           </DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
+        <div className="grid gap-4 pt-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="amount" className="text-right">
               Amount
@@ -86,6 +92,22 @@ export default function AddFundDialog() {
               placeholder="Enter amount Min. ₦100"
               customInput={Input}
             />
+          </div>
+          <div className="flex justify-around">
+            <Paragraphing className="">
+              Transaction Fee: ₦{transactionFee}.00
+            </Paragraphing>
+            <Paragraphing className="">
+              Total Charge:{" "}
+              <b>
+                {amount
+                  ? `₦${Intl.NumberFormat().format(
+                      parseInt(amount.slice(1).split(",").join("")) +
+                        transactionFee
+                    )}`
+                  : "₦0"}
+              </b>
+            </Paragraphing>
           </div>
         </div>
         <DialogFooter>
