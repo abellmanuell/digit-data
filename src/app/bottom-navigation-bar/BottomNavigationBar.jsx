@@ -41,7 +41,7 @@ export default function BottomNavigationBar() {
       <Outlet />
 
       {
-        <div className="fixed bottom-0 bg-white h-14 min-w-full shadow-sm pt-2 px-6 md:hidden border-t">
+        <div className="fixed bottom-0 bg-white h-14 min-w-full shadow-sm pt-4 pb-1 px-6 md:hidden border-t">
           <ul className="flex justify-between items-center">
             {items.map(({ url, title, icon: Icon }) => {
               return (
