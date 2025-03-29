@@ -25,24 +25,28 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/components/ui/select";
-import { cn } from "../../utils/cn";
 import Paragraphing from "@/components/Paragraphing";
+import ResponseSpinner from "@/components/ResponseSpinner";
 
 export default function BuyData() {
-  const [isLoading, setIsLoading] = useState(false);
+  const { token, setToken } = useContext(TokenContext);
+  const { user, setUser } = useContext(UserContext);
   const [isOpen, setIsOpen] = useState(false);
   const [buyData, setBuyData] = useState(null);
   const [networks, setNetworks] = useState([]);
-  const { token, setToken } = useContext(TokenContext);
-  const { user, setUser } = useContext(UserContext);
   const [buyDataProps, setBuyDataProps] = useState({});
   const [dataPlans, setDataPlans] = useState([]);
   const [gifting, setGifting] = useState([]);
   const [smeNetwork, setSME] = useState([]);
   const [corporate, setCorporate] = useState([]);
+  const [spinner, setSpinner] = useState({
+    isPageLoading: false,
+    isResponseLoading: false,
+  });
 
   /* TRIGGER ACTION TO PURCHASE AIRTIME */
   async function buy(data, token) {
+    setSpinner({ ...spinner, isResponseLoading: true });
     const request = await topUpServices.buyData(
       { ...data, ...buyDataProps },
       token
@@ -54,6 +58,7 @@ export default function BuyData() {
     } else {
       toast.error(request.message);
     }
+    setSpinner({ ...spinner, isResponseLoading: false });
   }
 
   /* Get Networks */
@@ -68,7 +73,7 @@ export default function BuyData() {
       ) {
         setNetworks(networks.data);
         setDataPlans(dataPlans.data);
-        setIsLoading(true);
+        setSpinner({ ...spinner, isPageLoading: true });
         return;
       }
 
@@ -104,12 +109,14 @@ export default function BuyData() {
     },
   });
 
-  return !isLoading ? (
+  return !spinner.isPageLoading ? (
     <div className="flex justify-center items-center h-screen">
       <ClipLoader color="#000" size={100} />
     </div>
   ) : (
     <Wrapper>
+      <ResponseSpinner spinner={spinner} />
+
       <Toaster position="top-left" reverseOrder={true} />
       <div className="my-10">
         <Heading className="mb-1">Buy Mobile Data Instantly</Heading>

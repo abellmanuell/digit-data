@@ -13,9 +13,9 @@ import topUpServices from "../../services/topup.service";
 import Wrapper from "@/components/Wrapper";
 import ButtonWithState from "@/components/ButtonWithState";
 import Paragraphing from "@/components/Paragraphing";
+import ResponseSpinner from "@/components/ResponseSpinner";
 
 export default function BuyAirtime() {
-  const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [buyAirtime, setBuyAirtime] = useState(null);
   const [networks, setNetworks] = useState([]);
@@ -23,6 +23,10 @@ export default function BuyAirtime() {
   const { token, setToken } = useContext(TokenContext);
   const { user, setUser } = useContext(UserContext);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [spinner, setSpinner] = useState({
+    isPageLoading: false,
+    isResponseLoading: false,
+  });
 
   /* Get Networks */
   async function loadNetworkAndAirtimeType() {
@@ -36,7 +40,7 @@ export default function BuyAirtime() {
       ) {
         setNetworks(networks.data);
         setAirtimeType(airtimeType.data);
-        setIsLoading(true);
+        setSpinner({ ...spinner, isPageLoading: true });
         return;
       }
 
@@ -81,6 +85,7 @@ export default function BuyAirtime() {
 
   /* TRIGGER ACTION TO PURCHASE AIRTIME */
   async function buy(data, token) {
+    setSpinner({ ...spinner, isResponseLoading: true });
     setIsSubmitting(true);
     const request = await topUpServices.topUp(data, token);
 
@@ -93,14 +98,17 @@ export default function BuyAirtime() {
       setIsSubmitting(false);
       toast.error(request.message);
     }
+    setSpinner({ ...spinner, isResponseLoading: false });
   }
 
-  return !isLoading ? (
+  return !spinner.isPageLoading ? (
     <div className="flex justify-center items-center h-screen">
       <ClipLoader color="#000" size={100} />
     </div>
   ) : (
     <Wrapper>
+      <ResponseSpinner spinner={spinner} />
+
       <Toaster position="top-left" reverseOrder={true} />
       <div className="my-10">
         <Heading className="mb-1">Buy Airtime Instantly</Heading>
