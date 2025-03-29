@@ -51,7 +51,7 @@ export default function EditUser() {
   ) : (
     <Wrapper>
       <Toaster toast={toast} />
-      <div className="my-16">
+      <div className="mt-10 mb-16">
         <Heading className="mb-1">Edit your profile</Heading>
         <Paragraphing>
           Update your details and personalize your experience.

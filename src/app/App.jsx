@@ -146,7 +146,7 @@ export default function App() {
               </SidebarMenu>
             </SidebarFooter>
           </Sidebar>
-          <SidebarTrigger />
+          {/* <SidebarTrigger /> */}
         </SidebarProvider>
       </section>
 

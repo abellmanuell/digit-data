@@ -25,6 +25,7 @@ import Settings from "./app/settings/Settings.jsx";
 import BuyData from "./app/buydata/BuyData.jsx";
 import ChangePassword from "./app/settings/change-password/ChangePassword.jsx";
 import HelpCenter from "./app/settings/help-center/HelpCenter.jsx";
+import BottomNavigationBar from "./app/bottom-navigation-bar/BottomNavigationBar.jsx";
 
 // Document Title
 document.title = "Digit Data";
@@ -43,21 +44,29 @@ const router = createBrowserRouter(
           />
         }
       >
-        <Route path="/dashboard" element={<App />}>
-          <Route index element={<Home />} />
-          <Route path="buyairtime" element={<BuyAirtime />} />
-          <Route path="buydata" element={<BuyData />} />
-          <Route path="transactions/:id" element={<AllTransactions />} />
-          <Route path="success" element={<PaymentMessage />} />
-          <Route path="settings" element={<Settings />} />
-          <Route path="settings/edit" element={<EditUser />} />
-          <Route path="settings/change-password" element={<ChangePassword />} />
-          <Route path="help-center" element={<HelpCenter />} />
-          <Route
-            path="airtime_transactions/:id"
-            element={<AirtimeTransactions />}
-          />
-          <Route path="#d" element={<h1 className="bg-red-500">Side Bar</h1>} />
+        <Route element={<BottomNavigationBar />}>
+          <Route path="/dashboard" element={<App />}>
+            <Route index element={<Home />} />
+            <Route path="buyairtime" element={<BuyAirtime />} />
+            <Route path="buydata" element={<BuyData />} />
+            <Route path="transactions/:id" element={<AllTransactions />} />
+            <Route path="success" element={<PaymentMessage />} />
+            <Route path="settings" element={<Settings />} />
+            <Route path="settings/edit" element={<EditUser />} />
+            <Route
+              path="settings/change-password"
+              element={<ChangePassword />}
+            />
+            <Route path="help-center" element={<HelpCenter />} />
+            <Route
+              path="airtime_transactions/:id"
+              element={<AirtimeTransactions />}
+            />
+            <Route
+              path="#d"
+              element={<h1 className="bg-red-500">Side Bar</h1>}
+            />
+          </Route>
         </Route>
       </Route>
     </Route>

@@ -134,11 +134,12 @@ export default function Home() {
         </div>
 
         <div>
-          <div className="flex items-center justify-center">
-            <p className="text-sm grow font-bold">Recent Transactions</p>
+          <div className="flex items-center justify-between">
+            <p className="text-sm font-bold">Recent Transactions</p>
             <Link
               to={"transactions/" + user._id}
               className="text-sm hover:font-medium transition-all"
+              justify-between
             >
               See More
             </Link>
@@ -158,44 +159,48 @@ export default function Home() {
                   </div>
                 </>
               ) : (
-                <Table>
-                  <TableCaption>
-                    A list of your recent transactions.
-                  </TableCaption>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead className="w-[100px]">
-                        Transaction Reference
-                      </TableHead>
-                      <TableHead>Phone Number</TableHead>
-                      <TableHead className="text-right">Amount</TableHead>
-                      <TableHead>Date</TableHead>
-                      <TableHead>Status</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {transactions.slice(0, 5).map((transaction, index) => {
-                      const {
-                        ident,
-                        create_date,
-                        Status,
-                        mobile_number,
-                        amount,
-                      } = transaction;
-                      return (
-                        <TableRow key={transaction._id}>
-                          <TableCell className="font-medium">{ident}</TableCell>
-                          <TableCell>{mobile_number}</TableCell>
-                          <TableCell className="text-right">
-                            ₦{amount}
-                          </TableCell>
-                          <TableCell>{create_date}</TableCell>
-                          <TableCell>{Status}</TableCell>
-                        </TableRow>
-                      );
-                    })}
-                  </TableBody>
-                </Table>
+                <div>
+                  <Table>
+                    <TableCaption>
+                      A list of your recent transactions.
+                    </TableCaption>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead className="w-[100px]">
+                          Transaction Reference
+                        </TableHead>
+                        <TableHead>Phone Number</TableHead>
+                        <TableHead className="text-right">Amount</TableHead>
+                        <TableHead>Date</TableHead>
+                        <TableHead>Status</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {transactions.slice(0, 5).map((transaction, index) => {
+                        const {
+                          ident,
+                          create_date,
+                          Status,
+                          mobile_number,
+                          amount,
+                        } = transaction;
+                        return (
+                          <TableRow key={transaction._id}>
+                            <TableCell className="font-medium">
+                              {ident}
+                            </TableCell>
+                            <TableCell>{mobile_number}</TableCell>
+                            <TableCell className="text-right">
+                              ₦{amount}
+                            </TableCell>
+                            <TableCell>{create_date}</TableCell>
+                            <TableCell>{Status}</TableCell>
+                          </TableRow>
+                        );
+                      })}
+                    </TableBody>
+                  </Table>
+                </div>
               )
             ) : (
               <div className="h-52 w-full flex flex-col space-y-2 items-center justify-center">
