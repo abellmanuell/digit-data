@@ -23,8 +23,8 @@ export default function PaymentMessage() {
           {status !== "cancelled"
             ? "Payment successful 🎉"
             : status !== "failed"
-            ? "Payment failed"
-            : "Payment cancel"}
+            ? "Payment cancel"
+            : "Payment failed"}
         </Heading>
         {status !== "cancelled" ? (
           <Paragraphing className="text-center">
